@@ -7,12 +7,8 @@ package bootcamp.creators.list;
 
 import bootcamp.core.Course;
 import bootcamp.core.Student;
-import bootcamp.core.Trainer;
 import bootcamp.lists.CourseStudents;
-import bootcamp.lists.CourseTrainers;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import main.Input;
 
 /**
@@ -42,10 +38,12 @@ public class CourseStudentsCreator {
 //        return listOfCourseStudents;
 //    }
     
+   
+    
     public List<CourseStudents> run(List<Course> listOfAvailableCourses, List<Student> listOfAvailableStudents, List<CourseStudents> listOfStudentsPerCourse){
-        Student student;
-        Course course;
-        int choiceNum;
+//        Student student;
+//        Course course;
+//        int choiceNum;
         String choice = "Y";
         //CourseStudents courseStudents = null;
         
@@ -64,40 +62,86 @@ public class CourseStudentsCreator {
               return listOfStudentsPerCourse;
             }
                        
-            System.out.println("\nChoose a trainer to assign to a course: ");
-            Input.printOptions(listOfAvailableStudents);
-            choiceNum = Input.getOptionInt(listOfAvailableStudents);
-            // Save trainer selected by the user
-            student = listOfAvailableStudents.get(choiceNum - 1);
-           
-            System.out.printf("\nChoose a course to assign trainer %s to:\n", student);
-            Input.printOptions(listOfAvailableCourses);
-            choiceNum = Input.getOptionInt(listOfAvailableCourses);
-            course = listOfAvailableCourses.get(choiceNum - 1);
-            
-            boolean studentAlreadyAdded = studentIsAlreadyInList(student, listOfStudentsPerCourse);
-            if (studentAlreadyAdded) {
-                System.out.printf("Student %s %s with birth date %s is already assigned to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), student.getDateOfBirth(), course.getTitle(), course.getStream(), course.getType());
-            }
-            else if (listOfStudentsPerCourse.isEmpty()){
-                    CourseStudents studentsPerCourse = addStudentToNewCourse(course, student);
-                    listOfStudentsPerCourse.add(studentsPerCourse);
-                    System.out.printf("Student %s %s successfully added to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), course.getTitle(), course.getStream(), course.getType());            }
-            else {
-                int courseIndexInList = getCourseStudentsIndexInList(course, listOfStudentsPerCourse);
-                if (courseIndexInList > -1){
-                    listOfStudentsPerCourse.get(courseIndexInList).addToLisT(student);
-                }
-                else{
-                    CourseStudents studentsPerCourse = addStudentToNewCourse(course, student);
-                    listOfStudentsPerCourse.add(studentsPerCourse);
-                }
-                System.out.printf("Student %s %s successfully added to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), course.getTitle(), course.getStream(), course.getType());
-                
-            }
+//            System.out.println("\nChoose a student to assign to a course: ");
+//            Input.printOptions(listOfAvailableStudents);
+//            choiceNum = Input.getOptionInt(listOfAvailableStudents);
+//            // Save trainer selected by the user
+//            student = listOfAvailableStudents.get(choiceNum - 1);
+              Student student = getStudentFromUser(listOfAvailableStudents);
+
+//            System.out.printf("\nChoose a course to assign trainer %s to:\n", student);
+//            Input.printOptions(listOfAvailableCourses);
+//            choiceNum = Input.getOptionInt(listOfAvailableCourses);
+//            course = listOfAvailableCourses.get(choiceNum - 1);
+              Course course = getCourseFromUser(student, listOfAvailableCourses);
+
+//            boolean studentAlreadyAdded = studentIsAlreadyInList(student, listOfStudentsPerCourse);
+//            if (studentAlreadyAdded) {
+//                System.out.printf("Student %s %s with birth date %s is already assigned to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), student.getDateOfBirth(), course.getTitle(), course.getStream(), course.getType());
+//            }
+//            else if (listOfStudentsPerCourse.isEmpty()){
+//                    CourseStudents studentsPerCourse = addStudentToNewCourse(course, student);
+//                    listOfStudentsPerCourse.add(studentsPerCourse);
+//                    System.out.printf("Student %s %s successfully added to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), course.getTitle(), course.getStream(), course.getType());            }
+//            else {
+//                int courseIndexInList = getCourseStudentsIndexInList(course, listOfStudentsPerCourse);
+//                if (courseIndexInList > -1){
+//                    listOfStudentsPerCourse.get(courseIndexInList).addToLisT(student);
+//                }
+//                else{
+//                    CourseStudents studentsPerCourse = addStudentToNewCourse(course, student);
+//                    listOfStudentsPerCourse.add(studentsPerCourse);
+//                }
+//                System.out.printf("Student %s %s successfully added to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), course.getTitle(), course.getStream(), course.getType());
+//                
+//            }
+            listOfStudentsPerCourse = addStudentToStudentsPerCourseList(student, course, listOfStudentsPerCourse);
             System.out.println("\nDo you want to insert another Student to a course? (Y/N)");
             choice = Input.getString("[yYnN]", "Y/N?");
         }
+        return listOfStudentsPerCourse;
+    }
+    
+     public Student getStudentFromUser(List<Student> listOfAvailableStudents){
+        System.out.println("\nChoose a student to assign to a course: ");
+        Input.printOptions(listOfAvailableStudents);
+        int choiceNum = Input.getOptionInt(listOfAvailableStudents);
+        // Save trainer selected by the user
+        Student student = listOfAvailableStudents.get(choiceNum - 1);
+        return student;
+    }
+    
+    public Course getCourseFromUser(Student student, List<Course> listOfAvailableCourses){
+        System.out.printf("\nChoose a course to assign trainer %s to:\n", student);
+        Input.printOptions(listOfAvailableCourses);
+        int choiceNum = Input.getOptionInt(listOfAvailableCourses);
+        Course course = listOfAvailableCourses.get(choiceNum - 1);
+        return course;
+    }
+    
+    public List<CourseStudents> addStudentToStudentsPerCourseList(Student student, Course course, List<CourseStudents> listOfStudentsPerCourse){
+        boolean studentAlreadyAdded = studentIsAlreadyInList(student, course, listOfStudentsPerCourse);
+        if (studentAlreadyAdded) {
+            System.out.printf("Student %s %s with birth date %s is already assigned to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), student.getDateOfBirth(), course.getTitle(), course.getStream(), course.getType());
+            return listOfStudentsPerCourse;
+        }
+        
+        if (listOfStudentsPerCourse.isEmpty()){
+            CourseStudents studentsPerCourse = addStudentToNewCourse(course, student);
+            listOfStudentsPerCourse.add(studentsPerCourse);
+            System.out.printf("Student %s %s successfully added to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), course.getTitle(), course.getStream(), course.getType());          
+            return listOfStudentsPerCourse;
+        }
+            
+        int courseIndexInList = getCourseStudentsIndexInList(course, listOfStudentsPerCourse);
+        if (courseIndexInList > -1){
+            listOfStudentsPerCourse.get(courseIndexInList).addToLisT(student);
+        }
+        else{
+            CourseStudents studentsPerCourse = addStudentToNewCourse(course, student);
+            listOfStudentsPerCourse.add(studentsPerCourse);
+        }
+        System.out.printf("Student %s %s successfully added to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), course.getTitle(), course.getStream(), course.getType());
         return listOfStudentsPerCourse;
     }
     
@@ -117,9 +161,9 @@ public class CourseStudentsCreator {
         return -1;
     }
     
-    private boolean studentIsAlreadyInList(Student student, List<CourseStudents> listOfStudentsPerCourse){
+    private boolean studentIsAlreadyInList(Student student, Course course, List<CourseStudents> listOfStudentsPerCourse){
         for (CourseStudents items : listOfStudentsPerCourse){
-            if (items.getList().contains(student)){
+            if (items.getList().contains(student) && items.getCourse().equals(course)){
                 //choice = "N";
                 return true;
             }

@@ -42,14 +42,14 @@ public class CourseAssignmentsCreator {
 //        return listOfCourseAssignments;
 //    }
     
-    public boolean availableAssignmentsToInsert(List<Assignment> listOfAvailableAssignments){
-        if (listOfAvailableAssignments.isEmpty()){
-                System.out.println("No available assignments to insert. Returning to main menu.");
-                //choice = "N";
-                return false;
-        }
-        return true;
-    }
+//    public boolean availableAssignmentsToInsert(List<Assignment> listOfAvailableAssignments){
+//        if (listOfAvailableAssignments.isEmpty()){
+//            System.out.println("No available assignments to insert. Returning to main menu.");
+//            //choice = "N";
+//            return false;
+//        }
+//        return true;
+//    }
     
     private Assignment getAssignmentFromUser(List<Assignment> listOfAvailableAssignments){
         System.out.println("\nChoose an assignment to insert to a course: ");
@@ -69,9 +69,9 @@ public class CourseAssignmentsCreator {
     }
     
     public List<CourseAssignments> run(List<Course> listOfAvailableCourses, List<Assignment> listOfAvailableAssignments, List<CourseAssignments> listOfAssignmentsPerCourse){
-        Assignment assignment;
-        Course course;
-        int choiceNum;
+//        Assignment assignment;
+//        Course course;
+//        int choiceNum;
         String choice = "Y";
         //List<Course> listOfAvailableCourses;
         //List<Assignment> listOfAvailableAssignments;
@@ -94,48 +94,80 @@ public class CourseAssignmentsCreator {
 //            choiceNum = Input.getOptionInt(listOfAvailableAssignments);
 //            // Save trainer selected by the user
 //            assignment = listOfAvailableAssignments.get(choiceNum - 1);
-              assignment = getAssignmentFromUser(listOfAvailableAssignments);
+              Assignment assignment = getAssignmentFromUser(listOfAvailableAssignments);
            
 //            System.out.printf("\nChoose a course to insert the assignment %s to:\n", assignment.getTitle());
 //            Input.printOptions(listOfAvailableCourses);
 //            choiceNum = Input.getOptionInt(listOfAvailableCourses);
 //            course = listOfAvailableCourses.get(choiceNum - 1);
-              course = getCourseFromUser(assignment, listOfAvailableCourses);
+              Course course = getCourseFromUser(assignment, listOfAvailableCourses);
               
 //            if (listOfCourseAssignments == null){
 //                listOfCourseAssignments = new ArrayList();
 //            }  
-            boolean dateValid = true;
-            if (course.getStartDate().isAfter(assignment.getSubDateTime()) || course.getEndDate().isBefore(assignment.getSubDateTime())){
-                System.out.printf("Assignment %s with submission date %s is not between course start date %s and course end date %s%n", assignment.getTitle(), assignment.getSubDateTime().toString(), course.getStartDate(), course.getEndDate());
-                dateValid = false;
-                //System.out.println("******* INVALID DATE");
-            }
             
-            boolean assignmentAlreadyAdded = assignmentIsAlreadyInList(assignment, listOfAssignmentsPerCourse);
-            //boolean dateIsValid = !choice.equals("invalidDate");
-            if (assignmentAlreadyAdded && dateValid) {
-                System.out.printf("Assignment %s with submission date %s and total mark %s already assigned to course %s/%s/%s!%n", assignment.getTitle(), assignment.getSubDateTime().toString(), assignment.getTotalMark(), course.getTitle(), course.getStream(), course.getType());
-            }
-            else if (dateValid && listOfAssignmentsPerCourse.isEmpty()){
-                    CourseAssignments assignmentsPerCourse = addAssignmentToNewCourse(course, assignment);
-                    addToCourseAssignmentsList(assignmentsPerCourse, listOfAssignmentsPerCourse);
-                    System.out.printf("Assignment %s successfully added to course %s/%s/%s!%n", assignment.getTitle(), course.getTitle(), course.getStream(), course.getType());
-            }
-            else if (dateValid){
-                int courseIndexInList = getCourseAssignmentsIndexInList(listOfAssignmentsPerCourse, course);
-                if (courseIndexInList > -1){
-                    listOfAssignmentsPerCourse.get(courseIndexInList).addToLisT(assignment);
-                }
-                else{
-                    CourseAssignments assignmentsPerCourse = addAssignmentToNewCourse(course, assignment);
-                    addToCourseAssignmentsList(assignmentsPerCourse, listOfAssignmentsPerCourse);
-                }
-                System.out.printf("Assignment %s successfully added to course %s/%s/%s!%n", assignment.getTitle(), course.getTitle(), course.getStream(), course.getType());                                
-            }
+            
+//            boolean assignmentAlreadyAdded = assignmentIsAlreadyInList(assignment, listOfAssignmentsPerCourse);
+//            //boolean dateIsValid = !choice.equals("invalidDate");
+//            if (assignmentAlreadyAdded && dateValid) {
+//                System.out.printf("Assignment %s with submission date %s and total mark %s already assigned to course %s/%s/%s!%n", assignment.getTitle(), assignment.getSubDateTime().toString(), assignment.getTotalMark(), course.getTitle(), course.getStream(), course.getType());
+//            }
+//            else if (dateValid && listOfAssignmentsPerCourse.isEmpty()){
+//                    CourseAssignments assignmentsPerCourse = addAssignmentToNewCourse(course, assignment);
+//                    addToCourseAssignmentsList(assignmentsPerCourse, listOfAssignmentsPerCourse);
+//                    System.out.printf("Assignment %s successfully added to course %s/%s/%s!%n", assignment.getTitle(), course.getTitle(), course.getStream(), course.getType());
+//            }
+//            else if (dateValid){
+//                int courseIndexInList = getCourseAssignmentsIndexInList(listOfAssignmentsPerCourse, course);
+//                if (courseIndexInList > -1){
+//                    listOfAssignmentsPerCourse.get(courseIndexInList).addToLisT(assignment);
+//                }
+//                else{
+//                    CourseAssignments assignmentsPerCourse = addAssignmentToNewCourse(course, assignment);
+//                    addToCourseAssignmentsList(assignmentsPerCourse, listOfAssignmentsPerCourse);
+//                }
+//                System.out.printf("Assignment %s successfully added to course %s/%s/%s!%n", assignment.getTitle(), course.getTitle(), course.getStream(), course.getType());                                
+//            }
+            listOfAssignmentsPerCourse = addAssignmentToAssignmentsPerCourseList(assignment, course, listOfAssignmentsPerCourse);
             System.out.println("\nDo you want to insert another Assignment to a course? (Y/N)");
             choice = Input.getString("[yYnN]", "Y/N?");
         }
+        return listOfAssignmentsPerCourse;
+    }
+    
+    public List<CourseAssignments> addAssignmentToAssignmentsPerCourseList(Assignment assignment, Course course, List<CourseAssignments> listOfAssignmentsPerCourse){
+        //boolean dateValid = true;
+        if (course.getStartDate().isAfter(assignment.getSubDateTime()) || course.getEndDate().isBefore(assignment.getSubDateTime())){
+            System.out.printf("Assignment %s with submission date %s is not between course start date %s and course end date %s%n", assignment.getTitle(), assignment.getSubDateTime().toString(), course.getStartDate(), course.getEndDate());
+           // dateValid = false;
+            //System.out.println("******* INVALID DATE");
+            return listOfAssignmentsPerCourse;
+        }
+        
+        boolean assignmentAlreadyAdded = assignmentIsAlreadyInList(assignment, course, listOfAssignmentsPerCourse);
+        //boolean dateIsValid = !choice.equals("invalidDate");
+        if (assignmentAlreadyAdded) {
+            System.out.printf("Assignment %s with submission date %s and total mark %s already assigned to course %s/%s/%s!%n", assignment.getTitle(), assignment.getSubDateTime().toString(), assignment.getTotalMark(), course.getTitle(), course.getStream(), course.getType());
+            return listOfAssignmentsPerCourse;
+        }
+
+        if (listOfAssignmentsPerCourse.isEmpty()){
+            CourseAssignments assignmentsPerCourse = addAssignmentToNewCourse(course, assignment);
+            addToCourseAssignmentsList(assignmentsPerCourse, listOfAssignmentsPerCourse);
+            System.out.printf("Assignment %s successfully added to course %s/%s/%s!%n", assignment.getTitle(), course.getTitle(), course.getStream(), course.getType());
+            return listOfAssignmentsPerCourse;
+        }
+        
+        int courseIndexInList = getCourseAssignmentsIndexInList(listOfAssignmentsPerCourse, course);
+        if (courseIndexInList > -1){
+            listOfAssignmentsPerCourse.get(courseIndexInList).addToLisT(assignment);
+        }
+        else{
+            CourseAssignments assignmentsPerCourse = addAssignmentToNewCourse(course, assignment);
+            addToCourseAssignmentsList(assignmentsPerCourse, listOfAssignmentsPerCourse);
+        }
+        System.out.printf("Assignment %s successfully added to course %s/%s/%s!%n", assignment.getTitle(), course.getTitle(), course.getStream(), course.getType());                                
+        
         return listOfAssignmentsPerCourse;
     }
     
@@ -161,9 +193,9 @@ public class CourseAssignmentsCreator {
         return -1;
     }
     
-    private boolean assignmentIsAlreadyInList(Assignment assignment, List<CourseAssignments> listOfCourseAssignments){
-        for (CourseAssignments assignmentsPerCourse : listOfCourseAssignments){
-            if (assignmentsPerCourse.getList().contains(assignment)){
+    private boolean assignmentIsAlreadyInList(Assignment assignment, Course course, List<CourseAssignments> listOfCourseAssignments){
+        for (CourseAssignments item : listOfCourseAssignments){
+            if (item.getList().contains(assignment) && item.getCourse().equals(course)){
                 //choice = "N";
                 return true;
             }

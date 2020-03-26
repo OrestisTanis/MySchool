@@ -8,9 +8,7 @@ package bootcamp.creators.list;
 import bootcamp.core.Course;
 import bootcamp.core.Trainer;
 import bootcamp.lists.CourseTrainers;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import main.Input;
 
 /**
@@ -40,22 +38,7 @@ public class CourseTrainersCreator {
 //        return listOfCourseTrainers;
 //    }
     
-    public Trainer getTrainerFromUser(List<Trainer> listOfAvailableTrainers){
-        System.out.println("\nChoose a trainer to assign to a course: ");
-        Input.printOptions(listOfAvailableTrainers);
-        int choiceNum = Input.getOptionInt(listOfAvailableTrainers);
-        // Save trainer selected by the user
-        Trainer trainer = listOfAvailableTrainers.get(choiceNum - 1); 
-        return trainer;
-    }
-    
-    public Course getCourseFromUser(Trainer trainer, List<Course> listOfAvailableCourses){
-        System.out.printf("\nChoose a course to assign trainer %s to:\n", trainer);
-        Input.printOptions(listOfAvailableCourses);
-        int choiceNum = Input.getOptionInt(listOfAvailableCourses);
-        Course course = listOfAvailableCourses.get(choiceNum - 1);
-        return course;
-    }
+   
      
     public List<CourseTrainers> run(List<Course> listOfAvailableCourses, List<Trainer> listOfAvailableTrainers, List<CourseTrainers> listOfTrainersPerCourse){
 //        Trainer trainer;
@@ -119,6 +102,23 @@ public class CourseTrainersCreator {
         return listOfTrainersPerCourse;
     }
     
+     public Trainer getTrainerFromUser(List<Trainer> listOfAvailableTrainers){
+        System.out.println("\nChoose a trainer to assign to a course: ");
+        Input.printOptions(listOfAvailableTrainers);
+        int choiceNum = Input.getOptionInt(listOfAvailableTrainers);
+        // Save trainer selected by the user
+        Trainer trainer = listOfAvailableTrainers.get(choiceNum - 1); 
+        return trainer;
+    }
+    
+    public Course getCourseFromUser(Trainer trainer, List<Course> listOfAvailableCourses){
+        System.out.printf("\nChoose a course to assign trainer %s to:\n", trainer);
+        Input.printOptions(listOfAvailableCourses);
+        int choiceNum = Input.getOptionInt(listOfAvailableCourses);
+        Course course = listOfAvailableCourses.get(choiceNum - 1);
+        return course;
+    }
+    
     public List<CourseTrainers> addTrainerToTrainersPerCourseList(Trainer trainer, Course course, List<CourseTrainers> listOfTrainersPerCourse){
         boolean trainerAlreadyAdded = trainerIsAlreadyInCourse(trainer, course, listOfTrainersPerCourse);
         if (trainerAlreadyAdded) {
@@ -142,7 +142,6 @@ public class CourseTrainersCreator {
             listOfTrainersPerCourse.add(trainersPerCourse);
         }
         System.out.printf("Trainer %s %s successfully added to course %s/%s/%s!%n", trainer.getFirstName(), trainer.getLastName(), course.getTitle(), course.getStream(), course.getType());                
-        
         return listOfTrainersPerCourse;
     }
     
@@ -169,8 +168,8 @@ public class CourseTrainersCreator {
     }
     
     private boolean trainerIsAlreadyInCourse(Trainer trainer, Course course, List<CourseTrainers> listOfTrainersPerCourse){
-        for (CourseTrainers items : listOfTrainersPerCourse){
-            if (items.getList().contains(trainer) && items.getCourse().equals(course)){
+        for (CourseTrainers item : listOfTrainersPerCourse){
+            if (item.getList().contains(trainer) && item.getCourse().equals(course)){
                 //choice = "N";
                 return true;
             }
