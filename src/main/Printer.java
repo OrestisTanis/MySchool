@@ -27,10 +27,9 @@ import java.util.Set;
  * @author orestis
  */
 public class Printer {
-    private static int numberOfStars = 150;
+    private final static int numberOfStars = 150;
             
     public Printer() {
-
     }
     
     public static void printEndOfProgram(){
