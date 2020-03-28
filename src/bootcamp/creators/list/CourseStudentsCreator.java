@@ -16,29 +16,9 @@ import main.Input;
  * @author orestis
  */
 public class CourseStudentsCreator {
-//    private List<Course> listOfAvailableCourses;
-//    private List<Student> listOfAvailableStudents;
-//    private static List<CourseStudents> listOfCourseStudents;
-    
-    /* Constructor */
-//    public CourseStudentsCreator(List<Course> listOfCourses, List<Student> students) {
-//        this.listOfAvailableCourses = listOfCourses;
-//        this.listOfAvailableStudents = students;
-//    }
-//    
+
     public CourseStudentsCreator(){
-        
     }
-    
-    /* Getter */
-//    public List<CourseStudents> getListOfCourseStudents(){
-//        if (listOfCourseStudents == null){
-//            listOfCourseStudents = new ArrayList();
-//        }
-//        return listOfCourseStudents;
-//    }
-    
-   
     
     public List<CourseStudents> run(List<Course> listOfAvailableCourses, List<Student> listOfAvailableStudents, List<CourseStudents> listOfStudentsPerCourse){
 //        Student student;
