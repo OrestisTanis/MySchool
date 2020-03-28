@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main;
 
 import bootcamp.core.Assignment;
@@ -13,15 +8,9 @@ import bootcamp.lists.CourseAssignments;
 import bootcamp.lists.CourseStudents;
 import bootcamp.lists.CourseTrainers;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-/**
- *
- * @author orestis
- */
 public class SyntheticData {
     private Set<Course> courses;
     private Set<Trainer> trainers;
@@ -81,8 +70,6 @@ public class SyntheticData {
     public Set<CourseTrainers> getSetOfCourseTrainers() {
         return setOfCourseTrainers;
     }
-    
-    
     
     public void createSyntheticData(){
         Course courseJavaFull = new Course("CB-10", "Java", "Full-time", LocalDate.parse("2020-03-03"), LocalDate.parse("2020-06-05"));

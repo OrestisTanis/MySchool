@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bootcamp.core;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import main.DateFormatable;
 
-/**
- *
- * @author orestis
- */
-public class Assignment {
+public class Assignment implements DateFormatable {
     /* Fields */
     private String title;
     private String description;
@@ -109,7 +101,7 @@ public class Assignment {
 
     @Override
     public String toString() {
-        return String.format("%s, Sub.Date: %s, Mark Needed: %d", title, subDateTime, totalMark);
+        return String.format("%s, Sub.Date: %s, Mark Needed: %d", title, subDateTime.format(formatter), totalMark);
     }
     
 }

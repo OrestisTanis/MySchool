@@ -1,27 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bootcamp.core;
 
 import java.util.Objects;
 
-/**
- *
- * @author orestis
- */
 public class Trainer {
     /* Fields */
     private String firstName;
     private String lastName;
     private String subject;
     
-    /* Constructor */
-
+    /* Constructors */
     public Trainer() {
     }
-    
     
     public Trainer(String firstName, String lastName, String subject){
         this.firstName = firstName;

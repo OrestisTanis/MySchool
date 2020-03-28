@@ -1,26 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bootcamp.creators;
 
 import appstate.UserData;
 import bootcamp.core.Assignment;
-import bootcamp.core.Course;
-import bootcamp.core.Trainer;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
 import main.Input;
 
-/**
- *
- * @author orestis
- */
 public class AssignmentCreator extends Creator {
 
     public AssignmentCreator(){
@@ -29,7 +13,7 @@ public class AssignmentCreator extends Creator {
     /* Methods */
     public void createAssignments(UserData userData){
         String choice = "Y";
-//       
+     
         while(choice.equalsIgnoreCase("Y")){
             String title = getTitleFromUser(titleRegex, titleInvalidMsg);
             String description = getDescriptionFromUser(titleRegex, titleInvalidMsg);

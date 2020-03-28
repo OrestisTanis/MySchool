@@ -1,21 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bootcamp.creators;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Set;
+import main.DateFormatable;
 
-/**
- *
- * @author orestis
- */
-public abstract class Creator {
-    protected DateTimeFormatter formatter; 
-    protected String dateFormatStr;
+public abstract class Creator implements DateFormatable {
+//    protected DateTimeFormatter formatter; 
+//    protected String dateFormatStr;
     protected String nameInvalidMsg;
     protected String nameRegex;
     protected String titleInvalidMsg;
@@ -23,18 +14,18 @@ public abstract class Creator {
     protected String dateInvalidMsg;
     
     public Creator() {
-        dateFormatStr = "dd/MM/yyyy";
-        formatter = DateTimeFormatter.ofPattern(dateFormatStr);
+//        dateFormatStr = "dd/MM/yyyy";
+//        formatter = DateTimeFormatter.ofPattern(dateFormatStr);
         nameInvalidMsg = "Only letters are allowed. Please enter a new value: ";
         nameRegex = "[a-zA-Z]+(\\s+[a-zA-Z]+)*";
         titleInvalidMsg = "Only letters, numbers, dashes, underscores and sharps are allowed. Please enter a new value: ";
         titleRegex = "[\\w\\s\\_#\\-]+(\\s+[\\w\\s\\_#\\-]+)*";
     }
-    private Creator(DateTimeFormatter formatter, String dateFormat) {
-        this();
-        this.formatter = formatter;
-        this.dateFormatStr = dateFormat;
-    }
+//    private Creator(DateTimeFormatter formatter, String dateFormat) {
+//        this();
+//        this.formatter = formatter;
+//        this.dateFormatStr = dateFormat;
+//    }
     protected DateTimeFormatter getFormatter() {
         return formatter;
     }

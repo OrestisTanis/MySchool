@@ -1,27 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bootcamp.core;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import main.DateFormatable;
 
-/**
- *
- * @author orestis
- */
-public class Course {
+public class Course implements DateFormatable {
     /* Fields */
     private String title;
     private String stream;
     private String type;
-    private LocalDate start_date;
-    private LocalDate end_date;
+    private LocalDate startDate;
+    private LocalDate endDate;
     
     /* Constructor */
-    
     public Course(String title, String stream, String type){
         this.title = title;
         this.stream = stream;
@@ -32,8 +23,8 @@ public class Course {
         this.title = title;
         this.stream = stream;
         this.type = type;
-        this.start_date = start_date;
-        this.end_date = end_date;
+        this.startDate = start_date;
+        this.endDate = end_date;
     }
     
     /* Accessor Properties */
@@ -59,17 +50,17 @@ public class Course {
     }
     
     public LocalDate getStartDate(){
-        return start_date;
+        return startDate;
     }    
     public void setStartDate(LocalDate start_date){
-        this.start_date = start_date;
+        this.startDate = start_date;
     }
     
     public LocalDate getEndDate(){
-        return end_date;
+        return endDate;
     }    
     public void setEndDate(LocalDate end_date){
-        this.end_date = end_date;
+        this.endDate = end_date;
     }
 
     /* Methods */
@@ -79,8 +70,8 @@ public class Course {
         hash = 61 * hash + Objects.hashCode(this.title);
         hash = 61 * hash + Objects.hashCode(this.stream);
         hash = 61 * hash + Objects.hashCode(this.type);
-        hash = 61 * hash + Objects.hashCode(this.start_date);
-        hash = 61 * hash + Objects.hashCode(this.end_date);
+        hash = 61 * hash + Objects.hashCode(this.startDate);
+        hash = 61 * hash + Objects.hashCode(this.endDate);
         return hash;
     }
     
@@ -105,10 +96,10 @@ public class Course {
         if (!Objects.equals(this.type, other.type)) {
             return false;
         }
-        if (!Objects.equals(this.start_date, other.start_date)) {
+        if (!Objects.equals(this.startDate, other.startDate)) {
             return false;
         }
-        if (!Objects.equals(this.end_date, other.end_date)) {
+        if (!Objects.equals(this.endDate, other.endDate)) {
             return false;
         }
         return true;
@@ -116,7 +107,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return title + ", stream: " + stream + ", type:  " + type + ", Start. date: " + start_date + ", End date: " + end_date;
+        return title + ", stream: " + stream + ", type:  " + type + ", Start. date: " + startDate.format(formatter) + ", End date: " + endDate.format(formatter);
     }
 
     

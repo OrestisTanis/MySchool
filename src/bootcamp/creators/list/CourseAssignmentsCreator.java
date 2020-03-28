@@ -6,12 +6,12 @@ import bootcamp.core.Assignment;
 import bootcamp.lists.CourseAssignments;
 import java.util.Iterator;
 import java.util.Set;
+import main.DateFormatable;
 import main.Input;
 
-public class CourseAssignmentsCreator {
+public class CourseAssignmentsCreator implements DateFormatable {
     
     public CourseAssignmentsCreator(){
-        
     }
     
     private Assignment getAssignmentFromUser(UserData userData){
@@ -52,7 +52,7 @@ public class CourseAssignmentsCreator {
     
     public void addAssignmentToAssignmentsPerCourseList(Assignment assignment, Course course, UserData userData){
         if (course.getStartDate().isAfter(assignment.getSubDateTime()) || course.getEndDate().isBefore(assignment.getSubDateTime())){
-            System.out.printf("Assignment %s with submission date %s is not between course start date %s and course end date %s%n", assignment.getTitle(), assignment.getSubDateTime().toString(), course.getStartDate(), course.getEndDate());                   
+            System.out.printf("Assignment %s with submission date %s is not between course start date %s and course end date %s%n", assignment.getTitle(), (assignment.getSubDateTime()).format(formatter).toString(), (course.getStartDate()).format(formatter), (course.getEndDate()).format(formatter));                   
             return ;
         }
         
@@ -64,7 +64,7 @@ public class CourseAssignmentsCreator {
                Set<Assignment> setOfAssignments = assignmentsPerCourse.getSetOfComponents();
                for (Assignment as: setOfAssignments){
                    if (as.equals(assignment)){
-                       System.out.printf("Assignment %s with submission date %s and total mark %s already assigned to course %s/%s/%s!%n", assignment.getTitle(), assignment.getSubDateTime().toString(), assignment.getTotalMark(), course.getTitle(), course.getStream(), course.getType());
+                       System.out.printf("Assignment %s with submission date %s and total mark %s already assigned to course %s/%s/%s!%n", assignment.getTitle(), (assignment.getSubDateTime()).format(formatter).toString(), assignment.getTotalMark(), course.getTitle(), course.getStream(), course.getType());
                        return;
                    }
                }

@@ -6,10 +6,11 @@ import bootcamp.core.Student;
 import bootcamp.lists.CourseStudents;
 import java.util.Iterator;
 import java.util.Set;
+import main.DateFormatable;
 import main.Input;
 
 
-public class CourseStudentsCreator {
+public class CourseStudentsCreator implements DateFormatable {
 
     public CourseStudentsCreator(){
     }
@@ -59,7 +60,7 @@ public class CourseStudentsCreator {
                Set<Student> setOfStudents = studentsPerCourse.getSetOfComponents();
                for (Student st : setOfStudents){
                    if (st.equals(student)){
-                      System.out.printf("Student %s %s with birth date %s is already assigned to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), student.getDateOfBirth(), course.getTitle(), course.getStream(), course.getType());
+                      System.out.printf("Student %s %s with birth date %s is already assigned to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), (student.getDateOfBirth()).format(formatter), course.getTitle(), course.getStream(), course.getType());
                       return;
                    }
                }

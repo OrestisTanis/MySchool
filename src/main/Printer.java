@@ -10,7 +10,6 @@ import bootcamp.lists.CourseStudents;
 import bootcamp.lists.CourseTrainers;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -115,13 +114,12 @@ public class Printer implements DateFormatable {
         }
         int i = 0;
         for (Assignment assignment : setOfAssignments) {
-            System.out.printf("%d. %s, sub.Date: %s\n", ++i, assignment.getTitle(), assignment.getSubDateTime());
+            System.out.printf("%d. %s, sub.Date: %s\n", ++i, assignment.getTitle(), assignment.getSubDateTime().format(formatter));
         }
         System.out.println("");
     }
 
     public static void printCourses(Set<Course> setOfCourses) {
-        //System.out.println("\n************ PRINTING LIST OF COURSES **************");
         printStarsBeforeAndAfterString("PRINTING LIST OF ALL COURSES", numberOfStars);
         if (setOfCourses.size() == 0) {
             System.out.println("No courses listed.\n");
@@ -135,11 +133,9 @@ public class Printer implements DateFormatable {
     }
 
     public static void printCourseStudents(Set<CourseStudents> setOfStudentsPerCourse) {
-        //Student student = null;
         for (CourseStudents studentsPerCourse : setOfStudentsPerCourse) {
             Course course = studentsPerCourse.getCourse();
             Set<Student> setOfStudents = studentsPerCourse.getSetOfComponents();
-            //System.out.printf("\n************ PRINTING LIST OF );
             printStarsBeforeAndAfterString(String.format("PRINTING LIST OF STUDENTS IN COURSE %s / %s / %s", course.getTitle().toUpperCase(), course.getStream().toUpperCase(), course.getType().toUpperCase()), numberOfStars);
             if (setOfStudents.size() == 0){
                 System.out.println("No students listed.\n");
@@ -156,11 +152,9 @@ public class Printer implements DateFormatable {
     }
 
     public static void printCourseTrainers(Set<CourseTrainers> setOfTrainersPerCourse) {
-        //Trainer trainer = null;
         for (CourseTrainers trainersPerCourse : setOfTrainersPerCourse) {
             Course course = trainersPerCourse.getCourse();
             Set<Trainer> setOfTrainers = trainersPerCourse.getSetOfComponents();
-            //System.out.printf("\n************ PRINTING LIST OF TRAINERS IN COURSE %s / %s / %s **************\n", course.getTitle().toUpperCase(), course.getStream().toUpperCase(), course.getType().toUpperCase());
             printStarsBeforeAndAfterString(String.format("PRINTING LIST OF TRAINERS IN COURSE %s / %s / %s", course.getTitle().toUpperCase(), course.getStream().toUpperCase(), course.getType().toUpperCase()), numberOfStars);
             if (setOfTrainers.size() == 0) {
                 System.out.println("No trainers listed.\n");
@@ -179,14 +173,13 @@ public class Printer implements DateFormatable {
         for (CourseAssignments assignmentsPerCourse : setOfAssignmentsPerCourse) {
             Set<Assignment> setOfAssignments = assignmentsPerCourse.getSetOfComponents();
             Course course = assignmentsPerCourse.getCourse();
-            //System.out.printf("\n************ PRINTING LIST OF ASSIGNMENTS IN COURSE %s / %s / %s **************\n", course.getTitle().toUpperCase(), course.getStream().toUpperCase(), course.getType().toUpperCase());
             printStarsBeforeAndAfterString(String.format("PRINTING LIST OF ASSIGNMENTS IN COURSE %s / %s / %s", course.getTitle().toUpperCase(), course.getStream().toUpperCase(), course.getType().toUpperCase()), numberOfStars);            
             if (setOfAssignments.size() == 0) {
                 System.out.println("No assignments listed.\n");
             } else {
                 int i = 0;
                 for (Assignment assignment : setOfAssignments) {
-                    System.out.printf("%d. %s, sub.time: %s\n", ++i, assignment.getTitle(), assignment.getSubDateTime());
+                    System.out.printf("%d. %s, sub.time: %s\n", ++i, assignment.getTitle(), assignment.getSubDateTime().format(formatter));
                 }
             }
             System.out.println("");

@@ -1,6 +1,5 @@
 package appstate;
 
-import main.*;
 import bootcamp.core.Assignment;
 import bootcamp.core.Course;
 import bootcamp.core.Student;
@@ -8,16 +7,9 @@ import bootcamp.core.Trainer;
 import bootcamp.lists.CourseAssignments;
 import bootcamp.lists.CourseStudents;
 import bootcamp.lists.CourseTrainers;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
-/**
- *
- * @author orestis
- */
 public class UserData {
     private Set<Course> setOfCourses;
     private Set<Trainer> setOfTrainers;
