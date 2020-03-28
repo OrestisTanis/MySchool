@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main;
 
+import appstate.UserData;
 import bootcamp.core.Assignment;
 import bootcamp.core.Course;
 import bootcamp.core.Student;
@@ -15,17 +11,12 @@ import bootcamp.lists.CourseTrainers;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-/**
- *
- * @author orestis
- */
 public class Printer {
     private final static int numberOfStars = 150;
             
@@ -88,135 +79,135 @@ public class Printer {
         System.out.println("");
     }
 
-    public static void printStudents(List list) {
+    public static void printStudents(Set<Student> setOfStudents) {
         printStarsBeforeAndAfterString("PRINTING LIST OF ALL STUDENTS", numberOfStars);
-        if (list.size() == 0) {
+        if (setOfStudents.size() == 0) {
             System.out.println("No students listed.\n");
             return;
         }
-        for (int i = 0; i < list.size(); i++) {
-            Student student = (Student) list.get(i);
-            System.out.printf("%d. %s %s\n", i + 1, student.getFirstName(), student.getLastName());
+        int i = 0;
+        for (Student student : setOfStudents) {
+            System.out.printf("%d. %s %s\n", ++i, student.getFirstName(), student.getLastName());
         }
         System.out.println("");
     }
 
-    public static void printTrainers(List list) {
+    public static void printTrainers(Set<Trainer> setOfTrainers) {
         //System.out.println("\n************ PRINTING LIST OF TRAINERS **************");
         printStarsBeforeAndAfterString("PRINTING LIST OF ALL TRAINERS", numberOfStars);
-        if (list.size() == 0) {
+        if (setOfTrainers.size() == 0) {
             System.out.println("No trainers listed.\n");
             return;
         }
-        for (int i = 0; i < list.size(); i++) {
-            Trainer trainer = (Trainer) list.get(i);
-            System.out.printf("%d. %s %s\n", i + 1, trainer.getFirstName(), trainer.getLastName());
+        int i = 0;
+        for (Trainer trainer : setOfTrainers) {
+            System.out.printf("%d. %s %s\n", ++i, trainer.getFirstName(), trainer.getLastName());
         }
         System.out.println("");
     }
 
-    public static void printAssignments(List<Assignment> list) {
+    public static void printAssignments(Set<Assignment> setOfAssignments) {
         //System.out.println("\n************ PRINTING LIST OF ASSIGNMENTS **************");
         printStarsBeforeAndAfterString("PRINTING LIST OF ALL ASSIGNMENTS", numberOfStars);
-        if (list.size() == 0) {
+        if (setOfAssignments.size() == 0) {
             System.out.println("No assignments listed.\n");
             return;
         }
-        for (int i = 0; i < list.size(); i++) {
-            Assignment assignment = list.get(i);
-            System.out.printf("%d. %s, sub.Date: %s\n", i + 1, assignment.getTitle(), assignment.getSubDateTime());
+        int i = 0;
+        for (Assignment assignment : setOfAssignments) {
+            System.out.printf("%d. %s, sub.Date: %s\n", ++i, assignment.getTitle(), assignment.getSubDateTime());
         }
         System.out.println("");
     }
 
-    public static void printCourses(List list) {
+    public static void printCourses(Set<Course> setOfCourses) {
         //System.out.println("\n************ PRINTING LIST OF COURSES **************");
         printStarsBeforeAndAfterString("PRINTING LIST OF ALL COURSES", numberOfStars);
-        if (list.size() == 0) {
+        if (setOfCourses.size() == 0) {
             System.out.println("No courses listed.\n");
             return;
         }
-        for (int i = 0; i < list.size(); i++) {
-            Course course = (Course) list.get(i);
-            System.out.printf("%d. %s %s %s\n", i + 1, course.getTitle(), course.getStream(), course.getType());
+        int i = 0;
+        for (Course course : setOfCourses) {
+            System.out.printf("%d. %s %s %s\n", ++i, course.getTitle(), course.getStream(), course.getType());
         }
         System.out.println("");
     }
 
-    public static void printCourseStudents(List list) {
-        Student student = null;
-        for (int i = 0; i < list.size(); i++) {
-            CourseStudents courseStudents = (CourseStudents) list.get(i);
-            Course course = courseStudents.getCourse();
+    public static void printCourseStudents(Set<CourseStudents> setOfStudentsPerCourse) {
+        //Student student = null;
+        for (CourseStudents studentsPerCourse : setOfStudentsPerCourse) {
+            Course course = studentsPerCourse.getCourse();
+            Set<Student> setOfStudents = studentsPerCourse.getSetOfComponents();
             //System.out.printf("\n************ PRINTING LIST OF );
             printStarsBeforeAndAfterString(String.format("PRINTING LIST OF STUDENTS IN COURSE %s / %s / %s", course.getTitle().toUpperCase(), course.getStream().toUpperCase(), course.getType().toUpperCase()), numberOfStars);
-            List<Student> studentList = courseStudents.getList();
-            if (studentList.size() == 0) {
+            if (setOfStudents.size() == 0){
                 System.out.println("No students listed.\n");
-            } else {
-                for (int j = 0; j < studentList.size(); j++) {
-                    student = (Student) studentList.get(j);
-                    System.out.printf("%d. %s %s\n", j + 1, student.getFirstName(), student.getLastName());
-                }
-                System.out.println("");
             }
+            else {
+                int i = 0;
+                for (Student student: setOfStudents){
+                     System.out.printf("%d. %s %s\n", ++i, student.getFirstName(), student.getLastName());
+                }
+            }
+            System.out.println("");
         }
+       
     }
 
-    public static void printCourseTrainers(List<CourseTrainers> list) {
-        Trainer trainer = null;
-        for (int i = 0; i < list.size(); i++) {
-            CourseTrainers curseTrainers = list.get(i);
-            Course course = curseTrainers.getCourse();
+    public static void printCourseTrainers(Set<CourseTrainers> setOfTrainersPerCourse) {
+        //Trainer trainer = null;
+        for (CourseTrainers trainersPerCourse : setOfTrainersPerCourse) {
+            Course course = trainersPerCourse.getCourse();
+            Set<Trainer> setOfTrainers = trainersPerCourse.getSetOfComponents();
             //System.out.printf("\n************ PRINTING LIST OF TRAINERS IN COURSE %s / %s / %s **************\n", course.getTitle().toUpperCase(), course.getStream().toUpperCase(), course.getType().toUpperCase());
             printStarsBeforeAndAfterString(String.format("PRINTING LIST OF TRAINERS IN COURSE %s / %s / %s", course.getTitle().toUpperCase(), course.getStream().toUpperCase(), course.getType().toUpperCase()), numberOfStars);
-            List<Trainer> trainerList = curseTrainers.getList();
-            if (trainerList.size() == 0) {
+            if (setOfTrainers.size() == 0) {
                 System.out.println("No trainers listed.\n");
-            } else {
-                for (int j = 0; j < trainerList.size(); j++) {
-                    trainer = (Trainer) trainerList.get(j);
-                    System.out.printf("%d. %s %s\n", j + 1, trainer.getFirstName(), trainer.getLastName());
+            } 
+            else {
+                int i = 0;
+                for (Trainer trainer: setOfTrainers) {
+                    System.out.printf("%d. %s %s\n", ++i, trainer.getFirstName(), trainer.getLastName());
                 }
             }
             System.out.println("");
         }
     }
 
-    public static void printCourseAssignments(List<CourseAssignments> list) {
-        Assignment assignment = null;
-        for (int i = 0; i < list.size(); i++) {
-            CourseAssignments courseAssignments = list.get(i);
-            Course course = courseAssignments.getCourse();
+    public static void printCourseAssignments(Set<CourseAssignments> setOfAssignmentsPerCourse) {
+        for (CourseAssignments assignmentsPerCourse : setOfAssignmentsPerCourse) {
+            Set<Assignment> setOfAssignments = assignmentsPerCourse.getSetOfComponents();
+            Course course = assignmentsPerCourse.getCourse();
             //System.out.printf("\n************ PRINTING LIST OF ASSIGNMENTS IN COURSE %s / %s / %s **************\n", course.getTitle().toUpperCase(), course.getStream().toUpperCase(), course.getType().toUpperCase());
-            printStarsBeforeAndAfterString(String.format("PRINTING LIST OF ASSIGNMENTS IN COURSE %s / %s / %s", course.getTitle().toUpperCase(), course.getStream().toUpperCase(), course.getType().toUpperCase()), numberOfStars);
-            List<Assignment> assignmentList = courseAssignments.getList();
-            if (assignmentList.size() == 0) {
+            printStarsBeforeAndAfterString(String.format("PRINTING LIST OF ASSIGNMENTS IN COURSE %s / %s / %s", course.getTitle().toUpperCase(), course.getStream().toUpperCase(), course.getType().toUpperCase()), numberOfStars);            
+            if (setOfAssignments.size() == 0) {
                 System.out.println("No assignments listed.\n");
             } else {
-                for (int j = 0; j < assignmentList.size(); j++) {
-                    assignment = (Assignment) assignmentList.get(j);
-                    System.out.printf("%d. %s, sub.time: %s\n", i + 1, assignment.getTitle(), assignment.getSubDateTime());
+                int i = 0;
+                for (Assignment assignment : setOfAssignments) {
+                    System.out.printf("%d. %s, sub.time: %s\n", ++i, assignment.getTitle(), assignment.getSubDateTime());
                 }
             }
             System.out.println("");
         }
     }
 
-    public static void printCoursesPerStudent(List<CourseStudents> studentsPerCourseList, List<Student> allStudents) {
-        Map<Student, List<Course>> coursesPerStudentMap = getCoursesPerStudentMap(studentsPerCourseList, allStudents);
-        Set<Entry<Student, List<Course>>> entrySet = coursesPerStudentMap.entrySet();
-        printStarsBeforeAndAfterString("PRINTING STUDENTS BELONING TO MORE THAN ONE COURSE", numberOfStars);
+    public static void printCoursesPerStudent(Set<CourseStudents> setOfstudentsPerCourse, Set<Student> allStudents) {
+        Map<Student, Set<Course>> coursesPerStudentMap = getCoursesPerStudentMap(setOfstudentsPerCourse, allStudents);
+        Set<Entry<Student, Set<Course>>> entrySet = coursesPerStudentMap.entrySet();
+        printStarsBeforeAndAfterString("PRINTING LIST OF STUDENTS BELONING TO MORE THAN ONE COURSE", numberOfStars);
         int i = 0;
         for (Entry entry : entrySet) {
-            if (((List<Course>) entry.getValue()).size() > 1) {
-                List<Course> listOfCourses = (List<Course>) entry.getValue();
+            if (((Set<Course>) entry.getValue()).size() > 1) {
+                Set<Course> listOfCourses = (Set<Course>) entry.getValue();
                 int numberOfCourses = listOfCourses.size();
                 System.out.printf("%d. %s belongs to (%d) courses:\n", ++i, entry.getKey(), numberOfCourses);
-                for (int j = 0; j < numberOfCourses; j++){
-                    System.out.printf("\t %d. %s\n", j + 1, listOfCourses.get(j));
+                int j = 0;
+                for (Course course : listOfCourses){
+                    System.out.printf("\t %d. %s\n", ++j, course);
                 }
-                System.out.println("");
+                 System.out.println("");
             }
         }
         if(i == 0){
@@ -224,13 +215,13 @@ public class Printer {
         }
     }
 
-    private static Map<Student, List<Course>> getCoursesPerStudentMap(List<CourseStudents> studentsPerCourseList, List<Student> allStudents) {
-        Map<Student, List<Course>> coursesPerStudentMap = new HashMap();
+    private static Map<Student, Set<Course>> getCoursesPerStudentMap(Set<CourseStudents> setOfStudentsPerCourse, Set<Student> allStudents) {
+        Map<Student, Set<Course>> coursesPerStudentMap = new HashMap();
         for (Student student : allStudents) { // for every student
-            for (CourseStudents studentsPerCourse : studentsPerCourseList) { // for every course 
+            for (CourseStudents studentsPerCourse : setOfStudentsPerCourse) { // for every course 
                 // If the student belongs in this course
-                if (studentsPerCourse.containedInList(student)) {
-                    List<Course> courses = new ArrayList();
+                if (studentsPerCourse.containedInSet(student)) {
+                    Set<Course> courses = new HashSet();
                     // If student is already added to the map
                     if (coursesPerStudentMap.containsKey(student)) {
                         courses = coursesPerStudentMap.get(student);
@@ -247,19 +238,22 @@ public class Printer {
         return coursesPerStudentMap;
     }
 
-    public static void printAssignmentsPerStudent(List<CourseAssignments> listOfAssignmentsPerCourse, List<CourseStudents> listOfStudentsPerCourse, List<Student> allStudents) {
-        Map<Student, List<Assignment>> assignmentsPerStudentMap = getAssignmentsPerStudentMap(listOfAssignmentsPerCourse, listOfStudentsPerCourse, allStudents);
-        Set<Entry<Student, List<Assignment>>> entrySet = assignmentsPerStudentMap.entrySet();
+    public static void printAssignmentsPerStudent(UserData userData) {
+        Set<CourseAssignments> setOfAssignmentsPerCourse = userData.getSetOfAssignmentsPerCourse();
+        Set<CourseStudents> setOfStudentsPerCourse = userData.getSetOfStudentsPerCourse();
+        Set<Student> allStudents = userData.getSetOfStudents();
+        Map<Student, Set<Assignment>> assignmentsPerStudentMap = getAssignmentsPerStudentMap(setOfAssignmentsPerCourse, setOfStudentsPerCourse, allStudents);        
+        Set<Entry<Student, Set<Assignment>>> entrySet = assignmentsPerStudentMap.entrySet();
         printStarsBeforeAndAfterString("PRINTING ASSIGNMENTS PER STUDENT", numberOfStars);
-        //System.out.println("\n*************** PRINTING ASSIGNMENTS PER STUDENT *************");
         int i = 0;
         for (Entry entry : entrySet) {
-            if (((List<Course>) entry.getValue()).size() > 0) {
-                List<Assignment> listOfAssignments = ((List<Assignment>)entry.getValue());
+            if (((Set<Course>) entry.getValue()).size() > 0) {
+                Set<Assignment> listOfAssignments = ((Set<Assignment>)entry.getValue());
                 int numberOfAssignments = listOfAssignments.size();
                 System.out.printf("%d. %s has (%d) assignments: \n", ++i, entry.getKey(), numberOfAssignments);
-                for (int j = 0; j < numberOfAssignments; j++){
-                    System.out.printf("\t %d. %s\n", j + 1, listOfAssignments.get(j));
+                int j = 0;
+                for (Assignment assignment : listOfAssignments){
+                    System.out.printf("\t %d. %s\n", ++j, assignment);
                 }
                 System.out.println("");
             }
@@ -269,21 +263,21 @@ public class Printer {
         }
     }
 
-    private static Map<Student, List<Assignment>> getAssignmentsPerStudentMap(List<CourseAssignments> listOfAssignmentsPerCourse, List<CourseStudents> listOfStudentsPerCourse, List<Student> allStudents) {
-        Map<Student, List<Course>> coursesPerStudentMap = getCoursesPerStudentMap(listOfStudentsPerCourse, allStudents);
-        Map<Student, List<Assignment>> assignmentsPerStudentMap = new HashMap();
+    private static Map<Student, Set<Assignment>> getAssignmentsPerStudentMap(Set<CourseAssignments> setOfAssignmentsPerCourse, Set<CourseStudents> setOfStudentsPerCourse, Set<Student> allStudents) {
+        Map<Student, Set<Course>> coursesPerStudentMap = getCoursesPerStudentMap(setOfStudentsPerCourse, allStudents);
+        Map<Student, Set<Assignment>> assignmentsPerStudentMap = new HashMap();
         for (Student student : allStudents) {
-            for (CourseAssignments assignmentsPerCourse : listOfAssignmentsPerCourse) { //for every course
+            for (CourseAssignments assignmentsPerCourse : setOfAssignmentsPerCourse) { //for every course
                 if (coursesPerStudentMap.get(student).contains(assignmentsPerCourse.getCourse())) { //if student is in the course
-                    List<Assignment> assignments = new ArrayList();
+                    Set<Assignment> assignments = new HashSet();
                     // If student is already added to the map
                     if (assignmentsPerStudentMap.containsKey(student)) {
                         assignments = assignmentsPerStudentMap.get(student);
                         // add the new assignments and replace the value in the map
-                        assignments.addAll(assignmentsPerCourse.getList());
+                        assignments.addAll(assignmentsPerCourse.getSetOfComponents());
                         assignmentsPerStudentMap.put(student, assignments); // update the entry
                     } else { // if student is not already in the map, add the first entry
-                        assignments.addAll(assignmentsPerCourse.getList());
+                        assignments.addAll(assignmentsPerCourse.getSetOfComponents());
                         assignmentsPerStudentMap.put(student, assignments);
                     }
                 }
@@ -292,24 +286,27 @@ public class Printer {
         return assignmentsPerStudentMap;
     }
 
-    public static void printListOfStudentsWithAssignmentsInWeek(List<CourseAssignments> listOfAssignmentsPerCourse, List<CourseStudents> listOfStudentsPerCourse, List<Student> allStudents, LocalDate inputDate) {
+    public static void printListOfStudentsWithAssignmentsInWeek(UserData userData, LocalDate inputDate) {
+        Set<CourseAssignments> setOfAssignmentsPerCourse = userData.getSetOfAssignmentsPerCourse();
+        Set<CourseStudents> setOfStudentsPerCourse = userData.getSetOfStudentsPerCourse();
+        Set<Student> setOfAllStudents = userData.getSetOfStudents();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.println("");
         printStarsBeforeAndAfterString(String.format("PRINTING LIST OF STUDENTS THAT MUST SUBMIT ASSIGNMENTS IN THE SAME CALENDAR WEEK AS %s", inputDate.format(formatter)), numberOfStars);        
         LocalDate firstDayOfWeek = getFirstDayOfWeek(inputDate);
         LocalDate lastDayOfWeek = getLastDayOfWeekFromFirst(firstDayOfWeek);
-        Map<Student, List<Assignment>> assignmentsPerStudentMap = getAssignmentsPerStudentMap(listOfAssignmentsPerCourse, listOfStudentsPerCourse, allStudents);       
-        Set<Entry<Student, List<Assignment>>> assignmentsPerStudentSet = assignmentsPerStudentMap.entrySet();
+        Map<Student, Set<Assignment>> assignmentsPerStudentMap = getAssignmentsPerStudentMap(setOfAssignmentsPerCourse, setOfStudentsPerCourse, setOfAllStudents);       
+        Set<Entry<Student, Set<Assignment>>> assignmentsPerStudentSet = assignmentsPerStudentMap.entrySet();
         int i = 0;
         for (Entry entry : assignmentsPerStudentSet) {
-            List<Assignment> assignmentsPerStudent = (List<Assignment>)entry.getValue();
+            Set<Assignment> assignmentsPerStudent = (Set<Assignment>)entry.getValue();
             for (Assignment assignment : assignmentsPerStudent){
                 LocalDate assignmentSubDate = assignment.getSubDateTime();
                 boolean afterFirstDayOfWeek = assignmentSubDate.isAfter(firstDayOfWeek) || assignmentSubDate.isEqual(firstDayOfWeek);
                 boolean beforeLastDayOfWeek = assignmentSubDate.isBefore(lastDayOfWeek) || assignmentSubDate.isEqual(lastDayOfWeek);
                 if (afterFirstDayOfWeek && beforeLastDayOfWeek){
                     Student student = (Student)entry.getKey();
-                    System.out.printf("%d. %s %s\n", ++i, student.getFirstName(), student.getLastName());
+                    System.out.printf("%d. %s %s, Assignment title: %s\n", ++i, student.getFirstName(), student.getLastName(), assignment.getTitle());
                 }
             }
         }
@@ -323,12 +320,10 @@ public class Printer {
         while (firstDateOfWeek.getDayOfWeek() != DayOfWeek.MONDAY) {
             firstDateOfWeek = firstDateOfWeek.minusDays(1);
         }
-        //System.out.println("IS MONDAY?: " + firstDateOfWeek);
         return firstDateOfWeek;
     }
 
     public static LocalDate getLastDayOfWeekFromFirst(LocalDate firstDateOfWeek) {
         return firstDateOfWeek.plusDays(4);
     }
-
 }

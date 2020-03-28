@@ -10,6 +10,7 @@ import bootcamp.lists.CourseStudents;
 import bootcamp.lists.CourseTrainers;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -63,4 +64,64 @@ public class UserData {
     public Set<CourseAssignments> getSetOfAssignmentsPerCourse() {
         return setOfAssignmentsPerCourse;
     }
+    
+    public boolean addCourseToSetOfCourses(Course course){
+        return setOfCourses.add(course);
+    }
+    
+    public boolean addTrainerToSetOfTrainers(Trainer trainer){
+        return setOfTrainers.add(trainer);
+    }
+    
+    public boolean addAssignmentToSetOfAssignments(Assignment assignment){
+        return setOfAssignments.add(assignment);
+    }
+    
+    public boolean addStudentToSetOfStudents(Student student){
+        return setOfStudents.add(student);
+    }
+    
+    public boolean addStudentsPerCourseToSetOfStudentsPerCourse(CourseStudents studentsPerCourse){
+        return setOfStudentsPerCourse.add(studentsPerCourse);
+    }
+    
+    public boolean addAssignmentsPerCourseToSetOfAssignmentsPerCourse(CourseAssignments assignmentsPerCourse){
+        return setOfAssignmentsPerCourse.add(assignmentsPerCourse);
+    }
+    
+    public boolean addTrainersPerCourseToSetOfTrainersPerCourse(CourseTrainers trainersPerCourse){
+        return setOfTrainersPerCourse.add(trainersPerCourse);
+    }
+    
+    public boolean setOfCoursesIsEmpty(){
+        return setOfCourses.isEmpty();
+    }
+    
+    public boolean setOfTrainersIsEmpty(){
+        return setOfTrainers.isEmpty();
+    }
+    
+    public boolean setOfStudentsIsEmpty(){
+        return setOfStudents.isEmpty();
+    }
+    
+    public boolean setOfAssignmentsIsEmpty(){
+        return setOfAssignments.isEmpty();
+    }
+    
+    public boolean setOfAssignmentsPerCourseIsEmpty(){
+        return setOfAssignmentsPerCourse.isEmpty();
+    }
+    
+    public boolean setOfTrainersPerCourseIsEmpty(){
+        return setOfTrainersPerCourse.isEmpty();
+    }
+    
+    public boolean setOfStudenrsPerCourseIsEmpty(){
+        return setOfStudentsPerCourse.isEmpty();
+    }
+    
+//    public boolean studentExistsInCourse(){
+//        
+//    }
 }

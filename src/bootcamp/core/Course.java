@@ -116,7 +116,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return title + " " + stream + " " + type + ", Start. date: " + start_date + ", End date: " + end_date;
+        return title + ", stream: " + stream + ", type:  " + type + ", Start. date: " + start_date + ", End date: " + end_date;
     }
 
     

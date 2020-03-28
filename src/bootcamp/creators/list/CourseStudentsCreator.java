@@ -1,159 +1,77 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bootcamp.creators.list;
 
+import appstate.UserData;
 import bootcamp.core.Course;
 import bootcamp.core.Student;
 import bootcamp.lists.CourseStudents;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Set;
 import main.Input;
 
-/**
- *
- * @author orestis
- */
+
 public class CourseStudentsCreator {
 
     public CourseStudentsCreator(){
     }
     
-    public List<CourseStudents> run(List<Course> listOfAvailableCourses, List<Student> listOfAvailableStudents, List<CourseStudents> listOfStudentsPerCourse){
-//        Student student;
-//        Course course;
-//        int choiceNum;
+    public void run(UserData userData){
         String choice = "Y";
-        //CourseStudents courseStudents = null;
-        
+       
         while(choice.equalsIgnoreCase("Y")){
-            // No trainers available to assign
-            if (listOfAvailableStudents.isEmpty()){
+            if (userData.setOfStudentsIsEmpty()){
                 System.out.println("No available students to assign. Returning to main menu.");
-                //choice = "N";
-                return listOfStudentsPerCourse;
+                return;
             }
-            
-            // No courses available to assign trainers to
-            if (listOfAvailableCourses.isEmpty()){
-              System.out.println("No available course to assign students to. Returning to main menu.");
-              //choice = "N";
-              return listOfStudentsPerCourse;
+            if (userData.setOfCoursesIsEmpty()){
+                System.out.println("No available course to assign students to. Returning to main menu.");
+                return;
             }
-                       
-//            System.out.println("\nChoose a student to assign to a course: ");
-//            Input.printOptions(listOfAvailableStudents);
-//            choiceNum = Input.getOptionInt(listOfAvailableStudents);
-//            // Save trainer selected by the user
-//            student = listOfAvailableStudents.get(choiceNum - 1);
-              Student student = getStudentFromUser(listOfAvailableStudents);
-
-//            System.out.printf("\nChoose a course to assign trainer %s to:\n", student);
-//            Input.printOptions(listOfAvailableCourses);
-//            choiceNum = Input.getOptionInt(listOfAvailableCourses);
-//            course = listOfAvailableCourses.get(choiceNum - 1);
-              Course course = getCourseFromUser(student, listOfAvailableCourses);
-
-//            boolean studentAlreadyAdded = studentIsAlreadyInList(student, listOfStudentsPerCourse);
-//            if (studentAlreadyAdded) {
-//                System.out.printf("Student %s %s with birth date %s is already assigned to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), student.getDateOfBirth(), course.getTitle(), course.getStream(), course.getType());
-//            }
-//            else if (listOfStudentsPerCourse.isEmpty()){
-//                    CourseStudents studentsPerCourse = addStudentToNewCourse(course, student);
-//                    listOfStudentsPerCourse.add(studentsPerCourse);
-//                    System.out.printf("Student %s %s successfully added to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), course.getTitle(), course.getStream(), course.getType());            }
-//            else {
-//                int courseIndexInList = getCourseStudentsIndexInList(course, listOfStudentsPerCourse);
-//                if (courseIndexInList > -1){
-//                    listOfStudentsPerCourse.get(courseIndexInList).addToLisT(student);
-//                }
-//                else{
-//                    CourseStudents studentsPerCourse = addStudentToNewCourse(course, student);
-//                    listOfStudentsPerCourse.add(studentsPerCourse);
-//                }
-//                System.out.printf("Student %s %s successfully added to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), course.getTitle(), course.getStream(), course.getType());
-//                
-//            }
-            listOfStudentsPerCourse = addStudentToStudentsPerCourseList(student, course, listOfStudentsPerCourse);
+              Student student = getStudentFromUser(userData);
+              Course course = getCourseFromUser(student, userData);
+            addStudentToStudentsPerCourseList(student, course, userData);
             System.out.println("\nDo you want to insert another Student to a course? (Y/N)");
             choice = Input.getString("[yYnN]", "Y/N?");
         }
-        return listOfStudentsPerCourse;
     }
     
-     public Student getStudentFromUser(List<Student> listOfAvailableStudents){
+     public Student getStudentFromUser(UserData userData){
         System.out.println("\nChoose a student to assign to a course: ");
-        Input.printOptions(listOfAvailableStudents);
-        int choiceNum = Input.getOptionInt(listOfAvailableStudents);
-        // Save trainer selected by the user
-        Student student = listOfAvailableStudents.get(choiceNum - 1);
+        Set setOfStudents = userData.getSetOfStudents();
+        Input.printOptionsFromSet(setOfStudents);
+        Student student = (Student) Input.getOptionFromSet(setOfStudents);
         return student;
     }
     
-    public Course getCourseFromUser(Student student, List<Course> listOfAvailableCourses){
+    public Course getCourseFromUser(Student student, UserData userData){
         System.out.printf("\nChoose a course to assign trainer %s to:\n", student);
-        Input.printOptions(listOfAvailableCourses);
-        int choiceNum = Input.getOptionInt(listOfAvailableCourses);
-        Course course = listOfAvailableCourses.get(choiceNum - 1);
+        Set setOfCourses = userData.getSetOfCourses();
+        Input.printOptionsFromSet(setOfCourses);
+        Course course = (Course)Input.getOptionFromSet(setOfCourses);
         return course;
     }
     
-    public List<CourseStudents> addStudentToStudentsPerCourseList(Student student, Course course, List<CourseStudents> listOfStudentsPerCourse){
-        boolean studentAlreadyAdded = studentIsAlreadyInList(student, course, listOfStudentsPerCourse);
-        if (studentAlreadyAdded) {
-            System.out.printf("Student %s %s with birth date %s is already assigned to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), student.getDateOfBirth(), course.getTitle(), course.getStream(), course.getType());
-            return listOfStudentsPerCourse;
+    public void addStudentToStudentsPerCourseList(Student student, Course course, UserData userData){
+        Set setOfStudentsPerCourse = userData.getSetOfStudentsPerCourse();
+        Iterator it = setOfStudentsPerCourse.iterator();
+        while (it.hasNext()){
+            CourseStudents studentsPerCourse = ((CourseStudents) it.next());
+           if (studentsPerCourse.getCourse() == course){
+               Set<Student> setOfStudents = studentsPerCourse.getSetOfComponents();
+               for (Student st : setOfStudents){
+                   if (st.equals(student)){
+                      System.out.printf("Student %s %s with birth date %s is already assigned to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), student.getDateOfBirth(), course.getTitle(), course.getStream(), course.getType());
+                      return;
+                   }
+               }
+               setOfStudents.add(student);
+               System.out.printf("Student %s %s successfully added to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), course.getTitle(), course.getStream(), course.getType());
+               return;
+           }
         }
-        
-        if (listOfStudentsPerCourse.isEmpty()){
-            CourseStudents studentsPerCourse = addStudentToNewCourse(course, student);
-            listOfStudentsPerCourse.add(studentsPerCourse);
-            System.out.printf("Student %s %s successfully added to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), course.getTitle(), course.getStream(), course.getType());          
-            return listOfStudentsPerCourse;
-        }
-            
-        int courseIndexInList = getCourseStudentsIndexInList(course, listOfStudentsPerCourse);
-        if (courseIndexInList > -1){
-            listOfStudentsPerCourse.get(courseIndexInList).addToLisT(student);
-        }
-        else{
-            CourseStudents studentsPerCourse = addStudentToNewCourse(course, student);
-            listOfStudentsPerCourse.add(studentsPerCourse);
-        }
-        System.out.printf("Student %s %s successfully added to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), course.getTitle(), course.getStream(), course.getType());
-        return listOfStudentsPerCourse;
-    }
-    
-//    private void addToCourseStudentsList(CourseStudents courseStudents, List<CourseStudents> listOfStudentsPerCourse){        
-//        listOfStudentsPerCourse.add(courseStudents);
-//    }
-    
-    /* Returns the index of the CourseStudents object which has the specified course,
-       or returns -1 if it is not found */
-    private int getCourseStudentsIndexInList(Course course, List<CourseStudents> listOfStudentsPerCourse){
-        for (int i = 0; i < listOfStudentsPerCourse.size(); i++){
-            if (listOfStudentsPerCourse.get(i).getCourse().equals(course)){
-                //listOfCourseTrainers.get(i).addToLisT(trainer);
-                return i;
-            }
-        }
-        return -1;
-    }
-    
-    private boolean studentIsAlreadyInList(Student student, Course course, List<CourseStudents> listOfStudentsPerCourse){
-        for (CourseStudents items : listOfStudentsPerCourse){
-            if (items.getList().contains(student) && items.getCourse().equals(course)){
-                //choice = "N";
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    private CourseStudents addStudentToNewCourse(Course course, Student student){
+        // If execution reaches here, that means there is no studentsPerCourse obj holding the course specified by the user
         CourseStudents studentsPerCourse = new CourseStudents(course);
-        studentsPerCourse.addToLisT(student);
-        return studentsPerCourse;
+        studentsPerCourse.addToSet(student);
+        userData.addStudentsPerCourseToSetOfStudentsPerCourse(studentsPerCourse);
+        System.out.printf("Student %s %s successfully added to course %s/%s/%s!%n", student.getFirstName(), student.getLastName(), course.getTitle(), course.getStream(), course.getType());
     }
 }

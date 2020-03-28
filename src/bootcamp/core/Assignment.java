@@ -70,9 +70,9 @@ public class Assignment {
     public int hashCode() {
         int hash = 7;
         hash = 79 * hash + Objects.hashCode(this.title);
-        hash = 79 * hash + Objects.hashCode(this.description);
+//        hash = 79 * hash + Objects.hashCode(this.description);
         hash = 79 * hash + Objects.hashCode(this.subDateTime);
-        hash = 79 * hash + this.oralMark;
+        //hash = 79 * hash + this.oralMark;
         hash = 79 * hash + this.totalMark;
         return hash;
     }
@@ -89,9 +89,9 @@ public class Assignment {
             return false;
         }
         final Assignment other = (Assignment) obj;
-        if (this.oralMark != other.oralMark) {
-            return false;
-        }
+//        if (this.oralMark != other.oralMark) {
+//            return false;
+//        }
         if (this.totalMark != other.totalMark) {
             return false;
         }
@@ -111,8 +111,5 @@ public class Assignment {
     public String toString() {
         return String.format("%s, Sub.Date: %s, Mark Needed: %d", title, subDateTime, totalMark);
     }
-
-    
-    
     
 }

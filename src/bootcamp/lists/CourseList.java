@@ -1,22 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bootcamp.lists;
 
 import bootcamp.core.Course;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-/**
- *
- * @author orestis
- */
 public abstract class CourseList<T>{
     private Course course;
-    private List<T> list;
+    private Set<T> set;
     private String type;
     
     /* Constructors */
@@ -26,14 +17,14 @@ public abstract class CourseList<T>{
         this.course = course;
     }
     
-    protected CourseList(Course course, List<T> list){
+    protected CourseList(Course course, Set<T> set){
         this(course);
-        this.list = list;
+        this.set = set;
     }
     
     /* Properties */
-    public List<T> getList(){
-        return list;
+    public Set<T> getSetOfComponents(){
+        return set;
     }
     
     public Course getCourse(){
@@ -45,35 +36,28 @@ public abstract class CourseList<T>{
     }
     
     /*  Methods */
-    public void addToLisT(T item){
+    public void addToSet(T item){
         // Lazy-instantiate the list
-        if (list == null){
-            list = new ArrayList();
+        if (set == null){
+            set = new HashSet();
         }
         // Add to list
-        this.list.add(item);
+        this.set.add(item);
     }
     
-//    public void printList(){
-//        System.out.printf("******* Printing %s list of %s ********\n", course.getTitle(), type.substring(type.lastIndexOf(".") + 7));
-//        for (int i = 0; i < list.size(); i++){
-//           
-//        }
-//    }
-    
-    public boolean listIsEmpty(){
-        return list.size() == 0;
+    public boolean SetIsEmpty(){
+        return set.size() == 0;
     }
     
-    public boolean containedInList(T item){
-        return list.contains(item);
+    public boolean containedInSet(T item){
+        return set.contains(item);
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 19 * hash + Objects.hashCode(this.course);
-        hash = 19 * hash + Objects.hashCode(this.list);
+        hash = 19 * hash + Objects.hashCode(this.set);
         hash = 19 * hash + Objects.hashCode(this.type);
         return hash;
     }
@@ -96,7 +80,7 @@ public abstract class CourseList<T>{
         if (!Objects.equals(this.course, other.course)) {
             return false;
         }
-        if (!Objects.equals(this.list, other.list)) {
+        if (!Objects.equals(this.set, other.set)) {
             return false;
         }
         return true;
@@ -104,12 +88,6 @@ public abstract class CourseList<T>{
     
     @Override
     public String toString() {
-        return "CourseList{" + "course=" + course + ", list=" + list + ", type=" + type + '}';
+        return "CourseSet{" + "course=" + course + ", set=" + set + ", type=" + type + '}';
     }
-    
-    
-
-   
-    
-    
 }

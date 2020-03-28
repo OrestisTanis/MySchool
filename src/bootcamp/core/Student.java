@@ -63,7 +63,7 @@ public class Student {
         hash = 23 * hash + Objects.hashCode(this.firstName);
         hash = 23 * hash + Objects.hashCode(this.lastName);
         hash = 23 * hash + Objects.hashCode(this.dateOfBirth);
-        hash = 23 * hash + Objects.hashCode(this.tuitionFees);
+//        hash = 23 * hash + Objects.hashCode(this.tuitionFees);
         return hash;
     }
     
@@ -96,7 +96,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return firstName + " " + lastName + "(dob: " + dateOfBirth + ")";
+        return firstName + " " + lastName + " (dob: " + dateOfBirth + ")";
     }
 
     

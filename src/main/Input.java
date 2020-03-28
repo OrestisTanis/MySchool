@@ -1,14 +1,15 @@
 /*
- * This class provides useful utilities for the development of console programs.
+ * This class provides useful utilities for the development of console programs which require input from the user.
  */
 package main;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Input {
@@ -50,10 +51,56 @@ public class Input {
      *
      * @param list an <tt>List</tt> object
      */
-    public static void printOptions(List list) {
+    public static void printOptionsFromList(List list) {
         for (int i = 0; i < list.size(); i++) {
             printMessage(i + 1 + ". " + list.get(i));
         }
+    }
+    
+    /**
+     * Outputs each string contained in the <tt>Set</tt> in the following
+     * format:
+     * <p>
+     * 1. Item 1
+     * <p>
+     * 2. Item 2
+     * <p>
+     * 3. Item 3
+     * <p>
+     * ...
+     *
+     * @param set a <tt>Set</tt> object
+     */
+    public static void printOptionsFromSet(Set set){
+        Iterator iterator = set.iterator();
+        int i = 0;
+        while (iterator.hasNext()){
+            printMessage(++i + ". " + iterator.next());
+        }
+    }
+    
+    /**
+     * Reads an integer input from the user and returns the <tt>Object</tt> located in the
+     * <tt>Set</tt>
+     * at index of (input - 1) which matches user's selection, enforcing input
+     * validation
+     *
+     * @param arrayList An ArrayList of strings
+     * @return The string representing the option chosen by the user
+     */
+    public static Object getOptionFromSet(Set set){
+        Object obj = null;
+        Iterator iterator = set.iterator();
+        int input = getIntFromTo(1, set.size());
+        int i = 0;  // i = 6
+        while (iterator.hasNext()){
+            i++;
+            obj = iterator.next();
+            if ( i == input ){
+                return obj;
+            }
+        }
+        return obj;
     }
 
     /**
@@ -88,11 +135,10 @@ public class Input {
      * at index - 1, which matches user's selection while enforcing input
      * validation
      *
-     * @param scanner A Scanner object
      * @param arrayList An ArrayList of strings
      * @return The string representing the option chosen by the user
      */
-    public static String getOption(List<String> list) {
+    public static String getOptionFromList(List<String> list) {
         int optionsListSize = list.size();
         int input = getIntFromTo(1, optionsListSize);
         return list.get(input - 1);
@@ -280,25 +326,4 @@ public class Input {
         }
         return resultDate;
     }
-
-//    static List<String> getMultipleStringInput(Scanner scanner) {
-//        String userInput = "";
-//        int userInputStrLength = 0;
-//        while (userInputStrLength < 1) {
-//            userInput = scanner.nextLine().trim();
-//
-//            // Does not allow input to be zero o more whitespaces
-//            if (userInput.matches("\\s*")) {
-//                userInput = "";
-//                System.out.println("A course title must be at least 1 character");
-//            }
-//        }
-//
-//        // Will always be greater than zero
-//        String[] wordArr = userInput.split(" ");
-//        List<String> wordList = Arrays.asList(wordArr);
-//
-//        return wordList;
-//    }
-
 }
