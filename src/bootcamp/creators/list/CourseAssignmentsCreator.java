@@ -6,7 +6,7 @@ import bootcamp.core.Assignment;
 import bootcamp.lists.CourseAssignments;
 import java.util.Iterator;
 import java.util.Set;
-import main.DateFormatable;
+import interfaces.DateFormatable;
 import main.Input;
 
 public class CourseAssignmentsCreator implements DateFormatable {
@@ -30,7 +30,7 @@ public class CourseAssignmentsCreator implements DateFormatable {
         return course;
     }
     
-    public void run(UserData userData){
+    public void createAssignmentsPerCourse(UserData userData){
         String choice = "Y";
         
         while(choice.equalsIgnoreCase("Y")){

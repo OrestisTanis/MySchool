@@ -2,7 +2,7 @@ package bootcamp.creators;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import main.DateFormatable;
+import interfaces.DateFormatable;
 
 public abstract class Creator implements DateFormatable {
 //    protected DateTimeFormatter formatter; 

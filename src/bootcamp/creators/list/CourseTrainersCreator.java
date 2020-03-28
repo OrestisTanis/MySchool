@@ -13,7 +13,7 @@ public class CourseTrainersCreator {
     public CourseTrainersCreator(){
     }
     
-    public void run(UserData userData){
+    public void createTrainersPerCourse(UserData userData){
         String choice = "Y";
         
         while(choice.equalsIgnoreCase("Y")){

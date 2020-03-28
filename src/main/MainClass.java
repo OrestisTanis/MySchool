@@ -90,15 +90,15 @@ public class MainClass {
         switch (choice) {
             case 1:
                 CourseTrainersCreator courseTrainersCreator = new CourseTrainersCreator();
-                courseTrainersCreator.run(userData);
+                courseTrainersCreator.createTrainersPerCourse(userData);
                 break;
             case 2:
                 CourseStudentsCreator courseStudentsCreator = new CourseStudentsCreator();
-                courseStudentsCreator.run((userData));
+                courseStudentsCreator.createStudentsPerCourse((userData));
                 break;
             case 3:
                 CourseAssignmentsCreator courseAssignmentsCreator = new CourseAssignmentsCreator();
-                courseAssignmentsCreator.run(userData);
+                courseAssignmentsCreator.createAssignmentsPerCourse(userData);
                 break;
             case 4:
                 menuState = MenuState.CREATION;
@@ -111,16 +111,21 @@ public class MainClass {
         appState.setMenuState(menuState);
     }
     
-    public static void goToPrintingMenu(){}
-    
     public static void askForDate(UserData userData){
         System.out.println("\nLastly, enter a date to print the list of students who need to submit one \n" +
                             "or more assignments on the same calendar week: ");
-        System.out.println("\nPlease enter assignment submission date (dd/MM/yyyy): ");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String validDate = "2015-01-01";
-        LocalDate assignmentSubDate = Input.getLocalDateAfter(LocalDate.parse(validDate),"dd/MM/yyyy", "Invalid date. Enter a valid date after " + LocalDate.parse(validDate).format(formatter) + " in the format of dd/MM/yyyy: ");
-        Printer.printListOfStudentsWithAssignmentsInWeek(userData, assignmentSubDate);
+        String choice = "y";
+        while (choice.equalsIgnoreCase("y")){
+            System.out.println("\nPlease enter assignment submission date (dd/MM/yyyy): ");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String validDate = "2015-01-01";
+            LocalDate assignmentSubDate = Input.getLocalDateAfter(LocalDate.parse(validDate),"dd/MM/yyyy", "Invalid date. Enter a valid date after " + LocalDate.parse(validDate).format(formatter) + " in the format of dd/MM/yyyy: ");
+            Printer.printListOfStudentsWithAssignmentsInWeek(userData, assignmentSubDate);
+            System.out.println("\nDo you want to enter a new date to print the list of students who need to submit one \n" +
+                            "or more assignments on the same calendar week? (Y/N)");
+            choice = Input.getString("[yYNn]", "Y/N?");
+        }
+            
     }
     
     public static void printAll(UserData userData){

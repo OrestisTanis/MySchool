@@ -6,7 +6,7 @@ import bootcamp.core.Student;
 import bootcamp.lists.CourseStudents;
 import java.util.Iterator;
 import java.util.Set;
-import main.DateFormatable;
+import interfaces.DateFormatable;
 import main.Input;
 
 
@@ -15,7 +15,7 @@ public class CourseStudentsCreator implements DateFormatable {
     public CourseStudentsCreator(){
     }
     
-    public void run(UserData userData){
+    public void createStudentsPerCourse(UserData userData){
         String choice = "Y";
        
         while(choice.equalsIgnoreCase("Y")){

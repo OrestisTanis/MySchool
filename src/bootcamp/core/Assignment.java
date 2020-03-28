@@ -2,7 +2,7 @@ package bootcamp.core;
 
 import java.time.LocalDate;
 import java.util.Objects;
-import main.DateFormatable;
+import interfaces.DateFormatable;
 
 public class Assignment implements DateFormatable {
     /* Fields */
