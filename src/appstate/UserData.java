@@ -64,6 +64,36 @@ public class UserData {
     public Set<CourseAssignments> getSetOfAssignmentsPerCourse() {
         return setOfAssignmentsPerCourse;
     }
+
+    public void setSetOfCourses(Set<Course> setOfCourses) {
+        this.setOfCourses = setOfCourses;
+    }
+
+    public void setSetOfTrainers(Set<Trainer> setOfTrainers) {
+        this.setOfTrainers = setOfTrainers;
+    }
+
+    public void setSetOfStudents(Set<Student> setOfStudents) {
+        this.setOfStudents = setOfStudents;
+    }
+
+    public void setSetOfAssignments(Set<Assignment> setOfAssignments) {
+        this.setOfAssignments = setOfAssignments;
+    }
+
+    public void setSetOfTrainersPerCourse(Set<CourseTrainers> setOfTrainersPerCourse) {
+        this.setOfTrainersPerCourse = setOfTrainersPerCourse;
+    }
+
+    public void setSetOfStudentsPerCourse(Set<CourseStudents> setOfStudentsPerCourse) {
+        this.setOfStudentsPerCourse = setOfStudentsPerCourse;
+    }
+
+    public void setSetOfAssignmentsPerCourse(Set<CourseAssignments> setOfAssignmentsPerCourse) {
+        this.setOfAssignmentsPerCourse = setOfAssignmentsPerCourse;
+    }
+    
+    
     
     public boolean addCourseToSetOfCourses(Course course){
         return setOfCourses.add(course);

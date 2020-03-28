@@ -7,12 +7,13 @@ package bootcamp.core;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import main.DateFormatable;
 
 /**
  *
  * @author orestis
  */
-public class Student {
+public class Student implements DateFormatable {
     /* Fields */
     private String firstName;
     private String lastName;
@@ -96,7 +97,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return firstName + " " + lastName + " (dob: " + dateOfBirth + ")";
+        return firstName + " " + lastName + " (dob: " + dateOfBirth.format(formatter) + ")";
     }
 
     

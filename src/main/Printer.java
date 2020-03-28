@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public class Printer {
+public class Printer implements DateFormatable {
     private final static int numberOfStars = 150;
             
     public Printer() {
@@ -290,9 +290,9 @@ public class Printer {
         Set<CourseAssignments> setOfAssignmentsPerCourse = userData.getSetOfAssignmentsPerCourse();
         Set<CourseStudents> setOfStudentsPerCourse = userData.getSetOfStudentsPerCourse();
         Set<Student> setOfAllStudents = userData.getSetOfStudents();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.println("");
-        printStarsBeforeAndAfterString(String.format("PRINTING LIST OF STUDENTS THAT MUST SUBMIT ASSIGNMENTS IN THE SAME CALENDAR WEEK AS %s", inputDate.format(formatter)), numberOfStars);        
+        printStarsBeforeAndAfterString(String.format("PRINTING LIST OF STUDENTS THAT MUST SUBMIT ASSIGNMENTS IN THE SAME CALENDAR WEEK AS %s %s",inputDate.getDayOfWeek().toString() ,inputDate.format(formatter)), numberOfStars);        
         LocalDate firstDayOfWeek = getFirstDayOfWeek(inputDate);
         LocalDate lastDayOfWeek = getLastDayOfWeekFromFirst(firstDayOfWeek);
         Map<Student, Set<Assignment>> assignmentsPerStudentMap = getAssignmentsPerStudentMap(setOfAssignmentsPerCourse, setOfStudentsPerCourse, setOfAllStudents);       

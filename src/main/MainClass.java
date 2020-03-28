@@ -3,34 +3,19 @@ package main;
 import appstate.AppState;
 import appstate.MenuState;
 import appstate.UserData;
-import bootcamp.core.Assignment;
 import bootcamp.creators.StudentCreator;
 import bootcamp.creators.CourseCreator;
 import bootcamp.creators.AssignmentCreator;
 import bootcamp.creators.TrainerCreator;
-import bootcamp.core.Course;
-import bootcamp.core.Student;
-import bootcamp.core.Trainer;
 import bootcamp.creators.list.CourseAssignmentsCreator;
 import bootcamp.creators.list.CourseStudentsCreator;
 import bootcamp.creators.list.CourseTrainersCreator;
-import bootcamp.lists.CourseAssignments;
-import bootcamp.lists.CourseStudents;
-import bootcamp.lists.CourseTrainers;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainClass {
-    static List<Course> courses = new ArrayList();
-    static List<Trainer> trainers = new ArrayList();
-    static List<Student> students = new ArrayList();
-    static List<Assignment> assignments = new ArrayList();
-    static List<CourseTrainers> listOfCourseTrainers = new ArrayList();
-    static List<CourseStudents> listOfCourseStudents = new ArrayList();
-    static List<CourseAssignments> listOfCourseAssignments = new ArrayList();
     
     public static void main(String[] args) {
         Input.createScanner();
@@ -43,8 +28,7 @@ public class MainClass {
         String choice = Input.getString("[yYNn]", "Y/N?");
         
         if(choice.equalsIgnoreCase("n")){
-            createSyntheticData();
-            printAll(userData);
+            populateUserDataWithSyntheticData(userData);
         }
         else {
             while (appState.getMenuState() != MenuState.EXITING) {
@@ -55,8 +39,9 @@ public class MainClass {
                     goToInsertionMenu(appState);
                 }
             };
-            printAll(userData);
+            
         }
+        printAll(userData);
         askForDate(userData);
         Printer.printEndOfProgram();
         Input.closeScanner();
@@ -148,19 +133,18 @@ public class MainClass {
         Printer.printCourseTrainers(userData.getSetOfTrainersPerCourse());
         Printer.printCourseAssignments(userData.getSetOfAssignmentsPerCourse());
         Printer.printCoursesPerStudent(userData.getSetOfStudentsPerCourse(), userData.getSetOfStudents());
-//        Printer.printAssignmentsPerStudent(userData.getSetOfAssignmentsPerCourse(), userData.getSetOfStudentsPerCourse(), userData.getSetOfStudents());
+        //Printer.printAssignmentsPerStudent(userData.getSetOfAssignmentsPerCourse(), userData.getSetOfStudentsPerCourse(), userData.getSetOfStudents());
         Printer.printAssignmentsPerStudent(userData);
     }   
     
-    private static void createSyntheticData(){
+    private static void populateUserDataWithSyntheticData(UserData userData){
         SyntheticData data = new SyntheticData();
-        //data.createSyntheticData();
-        courses = data.getCourses();
-        trainers = data.getTrainers();
-        students = data.getStudents();
-        assignments = data.getAssignments();
-        listOfCourseStudents = data.getStudentsPerCourses();
-        listOfCourseTrainers = data.getTrainersPerCourses();
-        listOfCourseAssignments = data.getAssignmeentsPerCourses();
+        userData.setSetOfCourses(data.getCourses());
+        userData.setSetOfTrainers(data.getTrainers());
+        userData.setSetOfStudents(data.getStudents());
+        userData.setSetOfAssignments(data.getAssignments());
+        userData.setSetOfTrainersPerCourse(data.getSetOfCourseTrainers());
+        userData.setSetOfStudentsPerCourse(data.getSetOfCourseStudents());
+        userData.setSetOfAssignmentsPerCourse(data.getAssignmentsPerCourses());
     }
 }
