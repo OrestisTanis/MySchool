@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 
 public class MainClass {
-    
     public static void main(String[] args) {
         Input.createScanner();
         AppState appState = new AppState();
@@ -77,7 +76,6 @@ public class MainClass {
                 break;
         }
         appState.setMenuState(menuState);
-        System.out.println(appState.getMenuState());
     }
     
     public static void goToInsertionMenu(AppState appState){

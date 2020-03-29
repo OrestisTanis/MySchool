@@ -311,11 +311,11 @@ public class Input{
                 resultDate = LocalDate.parse(inputStr, formatter);
                 dateValid = minDate.isBefore(resultDate);
             }
-            if (resultDate.getDayOfWeek() == DayOfWeek.SATURDAY || resultDate.getDayOfWeek() == DayOfWeek.SUNDAY){
+            if (dateValid && (resultDate.getDayOfWeek() == DayOfWeek.SATURDAY || resultDate.getDayOfWeek() == DayOfWeek.SUNDAY)){
                 dateValid = false;
             }
             if (!dateValid){
-                System.out.printf("Date %s %s is invalid. Please enter a valid working date after %s (%s): ", resultDate.getDayOfWeek().toString().substring(0,3), resultDate.format(formatter), minDate.format(formatter), dateFormatStr);
+                System.out.printf("Invalid date. Please enter a valid working date after %s (%s): \n", minDate.format(formatter), dateFormatStr);
             }
         }
         return resultDate;
