@@ -210,12 +210,6 @@ public class Input{
             try {
                 input = scanner.nextInt();
                 scanner.nextLine();
-                /* It's because when you enter a number then press Enter, input.nextInt() consumes only the number,
-                *  not the "end of line". When input.nextLine() executes, it consumes the "end of line" still in 
-                *  the buffer from the first input.
-                *  So when you continue reading with input.nextLine() you receive the "\n" Enter key.
-                * https://stackoverflow.com/questions/13102045/scanner-is-skipping-nextline-after-using-next-or-nextfoo
-                 */
             } catch (Exception e) {
                 scanner.nextLine();
                 input =  -1;
@@ -244,12 +238,6 @@ public class Input{
             try {
                 input = scanner.nextDouble();
                 scanner.nextLine();
-                /* It's because when you enter a number then press Enter, input.nextInt() consumes only the number,
-                *  not the "end of line". When input.nextLine() executes, it consumes the "end of line" still in 
-                *  the buffer from the first input.
-                *  So when you continue reading with input.nextLine() you receive the "\n" Enter key.
-                * https://stackoverflow.com/questions/13102045/scanner-is-skipping-nextline-after-using-next-or-nextfoo
-                 */
             } catch (Exception e) {
                 scanner.nextLine();
                 input =  -1;
