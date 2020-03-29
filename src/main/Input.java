@@ -1,8 +1,10 @@
 /*
- * This class provides useful utilities for the development of console programs which require input from the user.
+ * This class provides useful utilities for the development of console programs which 
+ * require input from the user.
  */
 package main;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-public class Input {
+public class Input{
     private static Scanner scanner;
     
     public static void createScanner(){
@@ -38,18 +40,18 @@ public class Input {
     }
 
     /**
-     * Outputs each string contained in the <tt>List</tt> in the following
-     * format:
+     * Outputs to the console  each string contained in 
+     * the <tt>List</tt> in the following format:
      * <p>
-     * 1. Item 1
+     * 1. String
      * <p>
-     * 2. Item 2
+     * 2. String
      * <p>
-     * 3. Item 3
+     * 3. String
      * <p>
      * ...
      *
-     * @param list an <tt>List</tt> object
+     * @param list a <tt>List</tt> object
      */
     public static void printOptionsFromList(List list) {
         for (int i = 0; i < list.size(); i++) {
@@ -58,14 +60,14 @@ public class Input {
     }
     
     /**
-     * Outputs each string contained in the <tt>Set</tt> in the following
-     * format:
+     * Outputs to the console each object contained in the <tt>Set</tt> 
+     * using its toString() method in the following format:
      * <p>
-     * 1. Item 1
+     * 1. Object
      * <p>
-     * 2. Item 2
+     * 2. Object
      * <p>
-     * 3. Item 3
+     * 3. Object
      * <p>
      * ...
      *
@@ -81,12 +83,11 @@ public class Input {
     
     /**
      * Reads an integer input from the user and returns the <tt>Object</tt> located in the
-     * <tt>Set</tt>
-     * at index of (input - 1) which matches user's selection, enforcing input
-     * validation
+     * <tt>Set</tt> at index of (input - 1) which matches user's selection,
+     * while enforcing input validation
      *
-     * @param arrayList An ArrayList of strings
-     * @return The string representing the option chosen by the user
+     * @param Set A Set object
+     * @return The object contained in the set, which represents the option chosen by the user
      */
     public static Object getOptionFromSet(Set set){
         Object obj = null;
@@ -104,13 +105,13 @@ public class Input {
     }
 
     /**
-     * Outputs the specified string parameters to the console in the following format:
+     * Outputs any number of string parameters to the console in the following format:
      * <p>
-     * 1. Parameter 1
+     * 1. StringParam
      * <p>
-     * 2. Parameter 2
+     * 2. StringParam
      * <p>
-     * 3. Parameter 3
+     * 3. StringParam
      * <p>
      * ...
      *
@@ -131,9 +132,8 @@ public class Input {
 
     /**
      * Reads input from the user and returns the <tt>string</tt> located in the
-     * <tt>ArrayList</tt>
-     * at index - 1, which matches user's selection while enforcing input
-     * validation
+     * <tt>ArrayList</tt> at index (input - 1), which matches user's selection,
+     * while enforcing input validation
      *
      * @param arrayList An ArrayList of strings
      * @return The string representing the option chosen by the user
@@ -146,7 +146,7 @@ public class Input {
 
     /**
      * Reads input from the user and returns an <tt>integer</tt>
-     * between 1 and the specified arrayList size, while enforcing input
+     * between 1 and the specified arrayList's size, while enforcing input
      * validation
      *
      * @param scanner A Scanner object
@@ -162,7 +162,7 @@ public class Input {
     /**
      * Ensures that an integer between <tt>lowerBound</tt> and
      * <tt>upperBound</tt> will be returned by the user. Displays a message on
-     * invalid input and forces the user to give new input.
+     * invalid input while forces the user to give valid input.
      *
      * @param scanner A Scanner object
      * @param int lowerBound The lower bound of the accepted input range.
@@ -193,8 +193,8 @@ public class Input {
     }
     
     /**
-    * Ensures that a positive integer will be returned by the user. 
-    * Displays a message on invalid input and forces the user to give new input.
+    * Ensures that a positive integer will be returned as input by the user. 
+    * Displays a message on invalid input while forcing the user to give valid input.
     *
     * @param scanner A Scanner object
     * @return A positive integer number.
@@ -228,7 +228,7 @@ public class Input {
     
     /**
     * Ensures that a positive double will be returned by the user. 
-    * Displays a message on invalid input and forces the user to give new input.
+    * Displays a message on invalid input while forcing the user to give new input.
     *
     * @param scanner A Scanner object
     * @return A positive double number.
@@ -262,8 +262,8 @@ public class Input {
 
     /**
      * Ensures that a string that matches the specified regular expression will
-     * be returned by the user. Displays a message on invalid input and forces
-     * the user to give new input.
+     * be returned by the user. Displays a message on invalid input while forcing
+     * the user to give valid input.
      *
      * @param scanner A Scanner object
      * @param allowedRegex The regular expression that matches the desired user
@@ -295,6 +295,27 @@ public class Input {
             }
             if (!dateValid){
                 System.out.println(invalidInputMessage);
+            }
+        }
+        return resultDate;
+    }
+    
+    public static LocalDate getWorkDateAfter(LocalDate minDate, String pattern){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        boolean dateValid = false;
+        LocalDate resultDate = null;
+        String dateFormatStr = "dd/MM/yyyy";
+        while(!dateValid){
+            String inputStr = scanner.nextLine().trim();
+            if (isDateValid(formatter, inputStr)){
+                resultDate = LocalDate.parse(inputStr, formatter);
+                dateValid = minDate.isBefore(resultDate);
+            }
+            if (resultDate.getDayOfWeek() == DayOfWeek.SATURDAY || resultDate.getDayOfWeek() == DayOfWeek.SUNDAY){
+                dateValid = false;
+            }
+            if (!dateValid){
+                System.out.printf("Date %s %s is invalid. Please enter a valid working date after %s (%s): ", resultDate.getDayOfWeek().toString().substring(0,3), resultDate.format(formatter), minDate.format(formatter), dateFormatStr);
             }
         }
         return resultDate;

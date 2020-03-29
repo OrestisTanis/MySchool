@@ -88,9 +88,12 @@ public class Student implements DateFormatable {
 
     @Override
     public String toString() {
-        return firstName + " " + lastName + " (dob: " + dateOfBirth.format(formatter) + ")";
+        //return firstName + " " + lastName + ", Birth Date: " + dateOfBirth.format(formatter) + "";
+        return String.format("%s, DOB: %s, TF: %.2f€", getFullName(), dateOfBirth.format(formatter), tuitionFees);
     }
 
-    
+    public String getFullName(){
+        return String.format(this.firstName + " " + this.lastName);
+    }
     
 }

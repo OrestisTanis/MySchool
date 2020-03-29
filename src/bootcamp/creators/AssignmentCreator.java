@@ -36,8 +36,8 @@ public class AssignmentCreator extends Creator {
     private LocalDate getSubDateFromUser(LocalDate minDate){
         System.out.printf("\nPlease enter assignment submission date (%s): \n", dateFormatStr);
         //LocalDate minDate = ;
-        String dateInvalidMsg = getInvalidDateAfterMsg(minDate);
-        return Input.getLocalDateAfter(minDate, dateFormatStr, dateInvalidMsg);
+        //tring dateInvalidMsg = getInvalidWorkDateAfterMsg(minDate);
+        return Input.getWorkDateAfter(minDate, dateFormatStr);
     }
     private int getTotalMarkFromUser(){
         System.out.println("\nPlease enter assignment total mark needed for a student to pass: ");

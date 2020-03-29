@@ -39,13 +39,13 @@ public class CourseCreator extends Creator {
     }
     private LocalDate getStartDateFromUserAfter(LocalDate minDate){
         System.out.printf("\nPlease enter course start date (%s): \n", dateFormatStr);
-        String invalidDateMsg = getInvalidDateAfterMsg(minDate);
-        return Input.getLocalDateAfter(minDate,"dd/MM/yyyy", invalidDateMsg);
+        //String invalidDateMsg = getInvalidWorkDateAfterMsg(minDate);
+        return Input.getWorkDateAfter(minDate, dateFormatStr);
     }
     private LocalDate getEndDateFromUser(LocalDate startDate){
         System.out.printf("\nPlease enter course end date (%s): \n", dateFormatStr);
-        String invalidDateMsg = getInvalidDateAfterMsg(startDate);
-        return Input.getLocalDateAfter(startDate, dateFormatStr, invalidDateMsg);
+        //String invalidDateMsg = getInvalidWorkDateAfterMsg(startDate);
+        return Input.getWorkDateAfter(startDate, dateFormatStr);
     }
     private void addCourseToSetOfCourses(Course course, UserData userData){
         if (!userData.addCourseToSetOfCourses(course)){

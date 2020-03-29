@@ -4,7 +4,7 @@ import bootcamp.core.Course;
 import bootcamp.core.Student;
 import java.util.Set;
 
-public class CourseStudents extends CourseList<Student> {
+public class CourseStudents extends CourseComponents<Student> {
     
     public CourseStudents(Course course){
         super(course);

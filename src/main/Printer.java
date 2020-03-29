@@ -11,8 +11,6 @@ import bootcamp.lists.CourseStudents;
 import bootcamp.lists.CourseTrainers;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -87,7 +85,7 @@ public class Printer implements DateFormatable {
         }
         int i = 0;
         for (Student student : setOfStudents) {
-            System.out.printf("%d. %s %s\n", ++i, student.getFirstName(), student.getLastName());
+            System.out.printf("%d. %s\n", ++i, student);
         }
         System.out.println("");
     }
@@ -101,7 +99,7 @@ public class Printer implements DateFormatable {
         }
         int i = 0;
         for (Trainer trainer : setOfTrainers) {
-            System.out.printf("%d. %s %s\n", ++i, trainer.getFirstName(), trainer.getLastName());
+            System.out.printf("%d. %s\n", ++i, trainer);
         }
         System.out.println("");
     }
@@ -115,7 +113,8 @@ public class Printer implements DateFormatable {
         }
         int i = 0;
         for (Assignment assignment : setOfAssignments) {
-            System.out.printf("%d. %s, sub.Date: %s\n", ++i, assignment.getTitle(), assignment.getSubDateTime().format(formatter));
+            System.out.printf("%d. %s\n", ++i, assignment);
+           
         }
         System.out.println("");
     }
@@ -128,7 +127,8 @@ public class Printer implements DateFormatable {
         }
         int i = 0;
         for (Course course : setOfCourses) {
-            System.out.printf("%d. %s %s %s\n", ++i, course.getTitle(), course.getStream(), course.getType());
+            System.out.printf("%d. %s\n", ++i, course);
+           
         }
         System.out.println("");
     }
@@ -144,7 +144,7 @@ public class Printer implements DateFormatable {
             else {
                 int i = 0;
                 for (Student student: setOfStudents){
-                     System.out.printf("%d. %s %s\n", ++i, student.getFirstName(), student.getLastName());
+                     System.out.printf("%d. %s (DOB: %s)\n", ++i, student.getFullName(), student.getDateOfBirth().format(formatter));
                 }
             }
             System.out.println("");
@@ -163,7 +163,7 @@ public class Printer implements DateFormatable {
             else {
                 int i = 0;
                 for (Trainer trainer: setOfTrainers) {
-                    System.out.printf("%d. %s %s\n", ++i, trainer.getFirstName(), trainer.getLastName());
+                    System.out.printf("%d. %s\n", ++i, trainer);
                 }
             }
             System.out.println("");
@@ -180,7 +180,7 @@ public class Printer implements DateFormatable {
             } else {
                 int i = 0;
                 for (Assignment assignment : setOfAssignments) {
-                    System.out.printf("%d. %s, sub.time: %s\n", ++i, assignment.getTitle(), assignment.getSubDateTime().format(formatter));
+                    System.out.printf("%d. %s\n", ++i, assignment);
                 }
             }
             System.out.println("");
@@ -188,7 +188,7 @@ public class Printer implements DateFormatable {
     }
 
     public static void printCoursesPerStudent(Set<CourseStudents> setOfstudentsPerCourse, Set<Student> allStudents) {
-        Map<Student, Set<Course>> coursesPerStudentMap = getCoursesPerStudentMap(setOfstudentsPerCourse, allStudents);
+        Map<Student, Set<Course>> coursesPerStudentMap = UserData.getCoursesPerStudentMap(setOfstudentsPerCourse, allStudents);
         Set<Entry<Student, Set<Course>>> entrySet = coursesPerStudentMap.entrySet();
         printStarsBeforeAndAfterString("PRINTING LIST OF STUDENTS BELONING TO MORE THAN ONE COURSE", numberOfStars);
         int i = 0;
@@ -196,7 +196,7 @@ public class Printer implements DateFormatable {
             if (((Set<Course>) entry.getValue()).size() > 1) {
                 Set<Course> listOfCourses = (Set<Course>) entry.getValue();
                 int numberOfCourses = listOfCourses.size();
-                System.out.printf("%d. %s belongs to (%d) courses:\n", ++i, entry.getKey(), numberOfCourses);
+                System.out.printf("%d. %s (DOB: %s) belongs to (%d) courses:\n", ++i, ((Student)entry.getKey()).getFullName(),((Student)entry.getKey()).getDateOfBirth().format(formatter), numberOfCourses);
                 int j = 0;
                 for (Course course : listOfCourses){
                     System.out.printf("\t %d. %s\n", ++j, course);
@@ -209,34 +209,11 @@ public class Printer implements DateFormatable {
         }
     }
 
-    private static Map<Student, Set<Course>> getCoursesPerStudentMap(Set<CourseStudents> setOfStudentsPerCourse, Set<Student> allStudents) {
-        Map<Student, Set<Course>> coursesPerStudentMap = new HashMap();
-        for (Student student : allStudents) { // for every student
-            for (CourseStudents studentsPerCourse : setOfStudentsPerCourse) { // for every course 
-                // If the student belongs in this course
-                if (studentsPerCourse.containedInSet(student)) {
-                    Set<Course> courses = new HashSet();
-                    // If student is already added to the map
-                    if (coursesPerStudentMap.containsKey(student)) {
-                        courses = coursesPerStudentMap.get(student);
-                        // add the new course and replace the value in the map
-                        courses.add(studentsPerCourse.getCourse());
-                        coursesPerStudentMap.put(student, courses); // update the entry
-                    } else { // if student is not already in the map, add the first entry
-                        courses.add(studentsPerCourse.getCourse());
-                        coursesPerStudentMap.put(student, courses);
-                    }
-                }
-            }
-        }
-        return coursesPerStudentMap;
-    }
-
     public static void printAssignmentsPerStudent(UserData userData) {
         Set<CourseAssignments> setOfAssignmentsPerCourse = userData.getSetOfAssignmentsPerCourse();
         Set<CourseStudents> setOfStudentsPerCourse = userData.getSetOfStudentsPerCourse();
         Set<Student> allStudents = userData.getSetOfStudents();
-        Map<Student, Set<Assignment>> assignmentsPerStudentMap = getAssignmentsPerStudentMap(setOfAssignmentsPerCourse, setOfStudentsPerCourse, allStudents);        
+        Map<Student, Set<Assignment>> assignmentsPerStudentMap = UserData.getAssignmentsPerStudentMap(setOfAssignmentsPerCourse, setOfStudentsPerCourse, allStudents);        
         Set<Entry<Student, Set<Assignment>>> entrySet = assignmentsPerStudentMap.entrySet();
         printStarsBeforeAndAfterString("PRINTING ASSIGNMENTS PER STUDENT", numberOfStars);
         int i = 0;
@@ -244,7 +221,7 @@ public class Printer implements DateFormatable {
             if (((Set<Course>) entry.getValue()).size() > 0) {
                 Set<Assignment> listOfAssignments = ((Set<Assignment>)entry.getValue());
                 int numberOfAssignments = listOfAssignments.size();
-                System.out.printf("%d. %s has (%d) assignments: \n", ++i, entry.getKey(), numberOfAssignments);
+                System.out.printf("%d. %s (DOB: %s) - (%d) assignments: \n", ++i, ((Student)entry.getKey()).getFullName(), ((Student)entry.getKey()).getDateOfBirth().format(formatter), numberOfAssignments);
                 int j = 0;
                 for (Assignment assignment : listOfAssignments){
                     System.out.printf("\t %d. %s\n", ++j, assignment);
@@ -257,39 +234,15 @@ public class Printer implements DateFormatable {
         }
     }
 
-    private static Map<Student, Set<Assignment>> getAssignmentsPerStudentMap(Set<CourseAssignments> setOfAssignmentsPerCourse, Set<CourseStudents> setOfStudentsPerCourse, Set<Student> allStudents) {
-        Map<Student, Set<Course>> coursesPerStudentMap = getCoursesPerStudentMap(setOfStudentsPerCourse, allStudents);
-        Map<Student, Set<Assignment>> assignmentsPerStudentMap = new HashMap();
-        for (Student student : allStudents) {
-            for (CourseAssignments assignmentsPerCourse : setOfAssignmentsPerCourse) { //for every course
-                if (coursesPerStudentMap.get(student).contains(assignmentsPerCourse.getCourse())) { //if student is in the course
-                    Set<Assignment> assignments = new HashSet();
-                    // If student is already added to the map
-                    if (assignmentsPerStudentMap.containsKey(student)) {
-                        assignments = assignmentsPerStudentMap.get(student);
-                        // add the new assignments and replace the value in the map
-                        assignments.addAll(assignmentsPerCourse.getSetOfComponents());
-                        assignmentsPerStudentMap.put(student, assignments); // update the entry
-                    } else { // if student is not already in the map, add the first entry
-                        assignments.addAll(assignmentsPerCourse.getSetOfComponents());
-                        assignmentsPerStudentMap.put(student, assignments);
-                    }
-                }
-            }
-        }
-        return assignmentsPerStudentMap;
-    }
-
     public static void printListOfStudentsWithAssignmentsInWeek(UserData userData, LocalDate inputDate) {
         Set<CourseAssignments> setOfAssignmentsPerCourse = userData.getSetOfAssignmentsPerCourse();
         Set<CourseStudents> setOfStudentsPerCourse = userData.getSetOfStudentsPerCourse();
         Set<Student> setOfAllStudents = userData.getSetOfStudents();
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.println("");
         printStarsBeforeAndAfterString(String.format("PRINTING LIST OF STUDENTS THAT MUST SUBMIT ASSIGNMENTS IN THE SAME CALENDAR WEEK AS %s %s",inputDate.getDayOfWeek().toString() ,inputDate.format(formatter)), numberOfStars);        
         LocalDate firstDayOfWeek = getFirstDayOfWeek(inputDate);
         LocalDate lastDayOfWeek = getLastDayOfWeekFromFirst(firstDayOfWeek);
-        Map<Student, Set<Assignment>> assignmentsPerStudentMap = getAssignmentsPerStudentMap(setOfAssignmentsPerCourse, setOfStudentsPerCourse, setOfAllStudents);       
+        Map<Student, Set<Assignment>> assignmentsPerStudentMap = UserData.getAssignmentsPerStudentMap(setOfAssignmentsPerCourse, setOfStudentsPerCourse, setOfAllStudents);       
         Set<Entry<Student, Set<Assignment>>> assignmentsPerStudentSet = assignmentsPerStudentMap.entrySet();
         int i = 0;
         for (Entry entry : assignmentsPerStudentSet) {
@@ -300,7 +253,7 @@ public class Printer implements DateFormatable {
                 boolean beforeLastDayOfWeek = assignmentSubDate.isBefore(lastDayOfWeek) || assignmentSubDate.isEqual(lastDayOfWeek);
                 if (afterFirstDayOfWeek && beforeLastDayOfWeek){
                     Student student = (Student)entry.getKey();
-                    System.out.printf("%d. %s %s, Assignment title: %s\n", ++i, student.getFirstName(), student.getLastName(), assignment.getTitle());
+                    System.out.printf("%d. %s, Assignment %s\n", ++i, student.getFullName(), assignment);
                 }
             }
         }
@@ -308,6 +261,20 @@ public class Printer implements DateFormatable {
             System.out.println("No students must submit assignments during this calendar week.\n");
         }
     }
+    
+    public static void printAll(UserData userData){
+        Printer.printingListsIndication();
+        Printer.printCourses(userData.getSetOfCourses());
+        Printer.printTrainers(userData.getSetOfTrainers());
+        Printer.printStudents(userData.getSetOfStudents());
+        Printer.printAssignments(userData.getSetOfAssignments());
+        Printer.printCourseStudents(userData.getSetOfStudentsPerCourse());
+        Printer.printCourseTrainers(userData.getSetOfTrainersPerCourse());
+        Printer.printCourseAssignments(userData.getSetOfAssignmentsPerCourse());
+        Printer.printCoursesPerStudent(userData.getSetOfStudentsPerCourse(), userData.getSetOfStudents());
+        Printer.printAssignmentsPerStudent(userData);
+    }   
+    
 
     public static LocalDate getFirstDayOfWeek(LocalDate date) {
         LocalDate firstDateOfWeek = date;

@@ -76,6 +76,6 @@ public class Trainer {
 
     @Override
     public String toString() {
-        return firstName + " " + lastName + ", subject: " + subject;
+        return firstName + " " + lastName + ", Subject: " + subject;
     }
 }

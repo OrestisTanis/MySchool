@@ -5,19 +5,19 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public abstract class CourseList<T>{
+public abstract class CourseComponents<T>{
     private Course course;
     private Set<T> set;
     private String type;
     
     /* Constructors */
-    protected CourseList(Course course){
+    protected CourseComponents(Course course){
         // Save the data-type of the object that's going to be instantiated
         this.type = getClass().getName();
         this.course = course;
     }
     
-    protected CourseList(Course course, Set<T> set){
+    protected CourseComponents(Course course, Set<T> set){
         this(course);
         this.set = set;
     }
@@ -73,7 +73,7 @@ public abstract class CourseList<T>{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final CourseList<?> other = (CourseList<?>) obj;
+        final CourseComponents<?> other = (CourseComponents<?>) obj;
         if (!Objects.equals(this.type, other.type)) {
             return false;
         }

@@ -38,10 +38,9 @@ public class MainClass {
                 if (appState.getMenuState() == MenuState.INSERTION) {
                     goToInsertionMenu(appState);
                 }
-            };
-            
+            }
         }
-        printAll(userData);
+        Printer.printAll(userData);
         askForDate(userData);
         Printer.printEndOfProgram();
         Input.closeScanner();
@@ -112,36 +111,21 @@ public class MainClass {
     }
     
     public static void askForDate(UserData userData){
-        System.out.println("\nLastly, enter a date to print the list of students who need to submit one \n" +
-                            "or more assignments on the same calendar week: ");
-        String choice = "y";
+        String message = " date to print the list of students who need to submit one \n" +
+                            "or more assignments on the same calendar week? (Y/N)";
+        System.out.println("\nLastly, do you want to enter a" + message);
+        String choice = Input.getString("[yYNn]", "Y/N?");
         while (choice.equalsIgnoreCase("y")){
             System.out.println("\nPlease enter assignment submission date (dd/MM/yyyy): ");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String validDate = "2015-01-01";
             LocalDate assignmentSubDate = Input.getLocalDateAfter(LocalDate.parse(validDate),"dd/MM/yyyy", "Invalid date. Enter a valid date after " + LocalDate.parse(validDate).format(formatter) + " in the format of dd/MM/yyyy: ");
             Printer.printListOfStudentsWithAssignmentsInWeek(userData, assignmentSubDate);
-            System.out.println("\nDo you want to enter a new date to print the list of students who need to submit one \n" +
-                            "or more assignments on the same calendar week? (Y/N)");
+            System.out.println("\nDo you want to enter a new" + message + "\n");
             choice = Input.getString("[yYNn]", "Y/N?");
-        }
-            
+        } 
     }
-    
-    public static void printAll(UserData userData){
-        Printer.printingListsIndication();
-        Printer.printCourses(userData.getSetOfCourses());
-        Printer.printTrainers(userData.getSetOfTrainers());
-        Printer.printStudents(userData.getSetOfStudents());
-        Printer.printAssignments(userData.getSetOfAssignments());
-        Printer.printCourseStudents(userData.getSetOfStudentsPerCourse());
-        Printer.printCourseTrainers(userData.getSetOfTrainersPerCourse());
-        Printer.printCourseAssignments(userData.getSetOfAssignmentsPerCourse());
-        Printer.printCoursesPerStudent(userData.getSetOfStudentsPerCourse(), userData.getSetOfStudents());
-        //Printer.printAssignmentsPerStudent(userData.getSetOfAssignmentsPerCourse(), userData.getSetOfStudentsPerCourse(), userData.getSetOfStudents());
-        Printer.printAssignmentsPerStudent(userData);
-    }   
-    
+   
     private static void populateUserDataWithSyntheticData(UserData userData){
         SyntheticData data = new SyntheticData();
         userData.setSetOfCourses(data.getCourses());

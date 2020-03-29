@@ -107,7 +107,7 @@ public class Course implements DateFormatable {
 
     @Override
     public String toString() {
-        return title + ", stream: " + stream + ", type:  " + type + ", Start. date: " + startDate.format(formatter) + ", End date: " + endDate.format(formatter);
+        return "Title: " + title + ", Stream: " + stream + ", Type:  " + type + ", Start. date: " + startDate.format(formatter) + ", End date: " + endDate.format(formatter);
     }
 
     

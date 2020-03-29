@@ -4,7 +4,7 @@ import bootcamp.core.Course;
 import bootcamp.core.Trainer;
 import java.util.Set;
 
-public class CourseTrainers extends CourseList<Trainer> {
+public class CourseTrainers extends CourseComponents<Trainer> {
     
     public CourseTrainers(Course course){
         super(course);
