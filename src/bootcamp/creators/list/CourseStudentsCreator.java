@@ -27,8 +27,8 @@ public class CourseStudentsCreator implements DateFormatable {
                 System.out.println("No available course to assign students to. Returning to main menu.");
                 return;
             }
-              Student student = getStudentFromUser(userData);
-              Course course = getCourseFromUser(student, userData);
+            Student student = getStudentFromUser(userData);
+            Course course = getCourseFromUser(student, userData);
             addStudentToStudentsPerCourseList(student, course, userData);
             System.out.println("\nDo you want to insert another Student to a course? (Y/N)");
             choice = Input.getString("[yYnN]", "Y/N?");
@@ -44,7 +44,7 @@ public class CourseStudentsCreator implements DateFormatable {
     }
     
     public Course getCourseFromUser(Student student, UserData userData){
-        System.out.printf("\nChoose a course to assign trainer %s to:\n", student);
+        System.out.printf("\nChoose a course to assign student %s to:\n", student);
         Set setOfCourses = userData.getSetOfCourses();
         Input.printOptionsFromSet(setOfCourses);
         Course course = (Course)Input.getOptionFromSet(setOfCourses);
